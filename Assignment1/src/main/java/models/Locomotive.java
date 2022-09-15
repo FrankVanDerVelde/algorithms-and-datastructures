@@ -14,5 +14,9 @@ public class Locomotive {
         return maxWagons;
     }
 
+    public int getLocNumber() {
+        return locNumber;
+    }
+
     // TODO
 }

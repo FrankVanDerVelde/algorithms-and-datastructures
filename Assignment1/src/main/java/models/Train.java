@@ -19,21 +19,15 @@ public class Train {
 
     /* three helper methods that are usefull in other methods */
     public boolean hasWagons() {
-        // TODO
-
-        return false;
+        return firstWagon != null;
     }
 
     public boolean isPassengerTrain() {
-        // TODO
-
-        return false;
+        return firstWagon instanceof PassengerWagon;
     }
 
     public boolean isFreightTrain() {
-        // TODO
-
-        return false;
+        return firstWagon instanceof FreightWagon;
     }
 
     public Locomotive getEngine() {
@@ -61,7 +55,7 @@ public class Train {
     public int getNumberOfWagons() {
         if (firstWagon == null) return 0;
 
-        int count = 0;
+        int count = 1;
         Wagon wagon = firstWagon;
         while (((wagon = wagon.getNextWagon()) != null)) {
             count++;
@@ -75,8 +69,12 @@ public class Train {
      * @return  the last wagon attached to the train
      */
     public Wagon getLastWagonAttached() {
-        // TODO
+        if (firstWagon == null) return null;
 
+        Wagon wagon = firstWagon;
+        while (((wagon = wagon.getNextWagon()) != null)) {
+            if (wagon.getNextWagon() == null) return wagon;
+        }
         return null;
     }
 
@@ -85,9 +83,20 @@ public class Train {
      *          (return 0 for a freight train)
      */
     public int getTotalNumberOfSeats() {
-        // TODO
+        if (!(firstWagon instanceof PassengerWagon passengerWagon)) return 0;
 
-        return 0;
+        int count = 0;
+        PassengerWagon wagon = passengerWagon;
+        do {
+            count+=wagon.getNumberOfSeats();
+            wagon = (PassengerWagon) wagon.getNextWagon();
+        } while (wagon.hasNextWagon() && wagon.getNextWagon() instanceof PassengerWagon);
+
+        /*while ((wagon = wagon.getNextWagon()) instanceof PassengerWagon nextWagon) {
+            count+= nextWagon.getNumberOfSeats();
+        }*/
+
+        return count;
     }
 
     /**
@@ -97,9 +106,16 @@ public class Train {
      *
      */
     public int getTotalMaxWeight() {
-        // TODO
+        if (!(firstWagon instanceof FreightWagon freightWagon)) return 0;
 
-        return 0;
+        int maxWeight = 0;
+        FreightWagon wagon = freightWagon;
+        do {
+            maxWeight+=wagon.getMaxWeight();
+            wagon = (FreightWagon) wagon.getNextWagon();
+        } while (wagon.hasNextWagon() && wagon.getNextWagon() instanceof FreightWagon);
+
+        return maxWeight;
     }
 
      /**
