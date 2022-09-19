@@ -1,5 +1,7 @@
 package models;
 
+import java.util.StringJoiner;
+
 public abstract class Wagon {
     protected int id;               // some unique ID of a Wagon
     private Wagon nextWagon;        // another wagon that is appended at the tail of this wagon
@@ -67,8 +69,13 @@ public abstract class Wagon {
      */
     public int getSequenceLength() {
         // TODO traverse the sequence and find its length
+        int sequenceLength = 1;
+        Wagon wagon = this.nextWagon;
+        while (((wagon = wagon.getNextWagon()) != null)) {
+            sequenceLength++;
+        }
 
-        return 0;
+        return sequenceLength;
     }
 
     /**
@@ -108,6 +115,7 @@ public abstract class Wagon {
         // TODO detach the tail from this wagon (sustaining the invariant propositions).
         //  and return the head wagon of that tail
 
+        // last wagon niet eerste?
         return previousWagon.getLastWagonAttached();
     }
 
@@ -121,6 +129,11 @@ public abstract class Wagon {
     public Wagon detachFront() {
         // TODO detach this wagon from its predecessor (sustaining the invariant propositions).
         //   and return that predecessor
+        System.out.println(hasPreviousWagon());
+        if (hasPreviousWagon()){
+            previousWagon.detachTail();
+            return previousWagon;
+        }
 
         return null;
     }
@@ -135,8 +148,10 @@ public abstract class Wagon {
      */
     public void reAttachTo(Wagon front) {
         // TODO detach any existing connections that will be rearranged
-
+        front.detachTail();
+//        this.nextWagon = null;
         // TODO attach this wagon to its new predecessor front (sustaining the invariant propositions).
+        this.previousWagon = front;
     }
 
     /**
@@ -145,6 +160,10 @@ public abstract class Wagon {
      */
     public void removeFromSequence() {
         // TODO
+        // Attach this wagons tail to the wagon infront
+        this.nextWagon.previousWagon = this.previousWagon;
+        // Attach this wagons front to this wagons tail
+         this.previousWagon.nextWagon = this.nextWagon;
     }
 
 
@@ -163,4 +182,13 @@ public abstract class Wagon {
     }
 
     // TODO string representation of a Wagon
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", "[", "]")
+                .add(Wagon.class.getSimpleName() + "-" + id)
+//                .add("nextWagon=" + nextWagon)
+//                .add("previousWagon=" + previousWagon)
+                .toString();
+    }
 }
