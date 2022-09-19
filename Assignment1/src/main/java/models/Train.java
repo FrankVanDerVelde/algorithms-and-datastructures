@@ -61,7 +61,7 @@ public class Train {
             count++;
         }
 
-        System.out.println("Number of wagons: " + count);
+//        System.out.println("Number of wagons: " + count);
         return count;
     }
 
