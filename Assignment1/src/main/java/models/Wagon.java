@@ -70,9 +70,14 @@ public abstract class Wagon {
      */
     public int getSequenceLength() {
         // TODO traverse the sequence and find its length
-        if (!hasNextWagon()) return 1;
+        int sequenceLength = 1;
+        Wagon currentWagon = this;
 
-        return 1 + nextWagon.getSequenceLength();
+        while (currentWagon.nextWagon != null) {
+            currentWagon = currentWagon.nextWagon;
+            sequenceLength++;
+        }
+        return sequenceLength;
     }
 
     /**
@@ -94,7 +99,7 @@ public abstract class Wagon {
             throw new IllegalStateException("%s has already been attached to %s".formatted(tail.toString(), tail.getPreviousWagon().toString()));
         }
 
-        System.out.println("Attaching " + tail + "behind " + getId());
+//        System.out.println("Attaching " + tail + "behind " + getId());
         nextWagon = tail;
         tail.previousWagon = this;
     }
@@ -189,24 +194,29 @@ public abstract class Wagon {
     public Wagon reverseSequence() {
         // TODO provide an iterative implementation,
         //   using attach- and detach methods of this class
-       Wagon wagonTail = this.getLastWagonAttached();
-       Wagon currentWagon = this;
-       while (wagonTail != getFirstWagonAttached()) {
 
-            wagonTail.attachTail(currentWagon);
+        Wagon tempWagon = null;
+        Wagon currentWagon = getFirstWagonAttached();
 
-            currentWagon = wagonTail.nextWagon;
-//           attachTail();
-//           detachTail();
-//           detachFront()
+        Wagon originaLastWagon = getLastWagonAttached();
+
+        while (currentWagon != null) {
+            tempWagon = currentWagon.previousWagon;
+//            attachTail();
+//            detachFront();
+//            detachTail();
+//            wagon1.reAttachTo(wagon2);
 
 
+//            currentWagon.detachFront();
+            currentWagon.previousWagon = currentWagon.nextWagon;
+            currentWagon.nextWagon = tempWagon;
 
+            currentWagon = currentWagon.previousWagon;
+        }
 
-//            this.getLastWagonAttached().reAttachTo(getFirstWagonAttached());
-       }
+        return originaLastWagon;
 
-       return getFirstWagonAttached();
     }
 
     // TODO string representation of a Wagon
@@ -215,8 +225,17 @@ public abstract class Wagon {
     public String toString() {
         return new StringJoiner(", ", "[", "]")
                 .add(Wagon.class.getSimpleName() + "-" + id)
-//                .add("nextWagon=" + nextWagon)
-//                .add("previousWagon=" + previousWagon)
                 .toString();
+    }
+
+    public void showAllWagons(Wagon wagon) {
+
+        Wagon nextWagon = wagon.getFirstWagonAttached();
+        while (nextWagon != null) {
+            System.out.println(nextWagon);
+            nextWagon = nextWagon.getNextWagon();
+
+        }
+
     }
 }
