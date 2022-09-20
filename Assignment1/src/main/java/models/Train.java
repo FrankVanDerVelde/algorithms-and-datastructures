@@ -61,7 +61,6 @@ public class Train {
             count++;
         }
 
-        System.out.println("Number of wagons: " + count);
         return count;
     }
 
@@ -83,20 +82,15 @@ public class Train {
      *          (return 0 for a freight train)
      */
     public int getTotalNumberOfSeats() {
-        if (!(firstWagon instanceof PassengerWagon passengerWagon)) return 0;
+        if (!(firstWagon instanceof PassengerWagon firstPassengerWagon)) return 0;
 
-        int count = 0;
-        PassengerWagon wagon = passengerWagon;
-        do {
-            count+=wagon.getNumberOfSeats();
-            wagon = (PassengerWagon) wagon.getNextWagon();
-        } while (wagon.hasNextWagon() && wagon.getNextWagon() instanceof PassengerWagon);
+        Wagon nextWagon = firstWagon;
+        int seats = firstPassengerWagon.getNumberOfSeats();
+        while ((nextWagon = nextWagon.getNextWagon()) != null) {
+            seats+=((PassengerWagon)nextWagon).getNumberOfSeats();
+        }
 
-        /*while ((wagon = wagon.getNextWagon()) instanceof PassengerWagon nextWagon) {
-            count+= nextWagon.getNumberOfSeats();
-        }*/
-
-        return count;
+        return seats;
     }
 
     /**
@@ -106,16 +100,15 @@ public class Train {
      *
      */
     public int getTotalMaxWeight() {
-        if (!(firstWagon instanceof FreightWagon freightWagon)) return 0;
+        if (!(firstWagon instanceof FreightWagon firstFreightWagon)) return 0;
 
-        int maxWeight = 0;
-        FreightWagon wagon = freightWagon;
-        do {
-            maxWeight+=wagon.getMaxWeight();
-            wagon = (FreightWagon) wagon.getNextWagon();
-        } while (wagon.hasNextWagon() && wagon.getNextWagon() instanceof FreightWagon);
+        Wagon nextWagon = firstWagon;
+        int weight = firstFreightWagon.getMaxWeight();
+        while ((nextWagon = nextWagon.getNextWagon()) != null) {
+            weight+=((FreightWagon)nextWagon).getMaxWeight();
+        }
 
-        return maxWeight;
+        return weight;
     }
 
      /**

@@ -84,14 +84,14 @@ public abstract class Wagon {
      *                               or:   "%s has already been attached to %s"
      */
     public void attachTail(Wagon tail) {
-        if (hasPreviousWagon()) {
-            throw new IllegalStateException("%s is already pulling %s".formatted(this.id, this.previousWagon.previousWagon.id));
-        } else if (tail.hasNextWagon()) {
-            throw new IllegalStateException("%s has already been attached to %s".formatted(tail.getId(), tail.getNextWagon().getId()));
+        if (hasNextWagon()) {
+            throw new IllegalStateException("%s is already pulling %s".formatted(this.id, this.nextWagon.id));
+        } else if (tail.hasPreviousWagon()) {
+            throw new IllegalStateException("%s has already been attached to %s".formatted(tail.getId(), tail.getPreviousWagon().getId()));
         }
 
-        this.previousWagon = tail;
-        tail.nextWagon = this;
+        this.nextWagon = tail;
+        tail.previousWagon = this;
     }
 
     /**
@@ -160,6 +160,11 @@ public abstract class Wagon {
         //   using attach- and detach methods of this class
 
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "[Wagon-%d]".formatted(this.id);
     }
 
     // TODO string representation of a Wagon
