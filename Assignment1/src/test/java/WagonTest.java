@@ -342,7 +342,7 @@ public class WagonTest {
         passengerWagon2.attachTail(passengerWagon3);
         passengerWagon3.attachTail(passengerWagon4);
 
-        passengerWagon3.showAllWagons(passengerWagon3);
+//        passengerWagon3.showAllWagons(passengerWagon3);
 
         // reverse part of the sequence
         Wagon rev = passengerWagon3.reverseSequence();

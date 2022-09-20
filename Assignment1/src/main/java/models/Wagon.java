@@ -192,28 +192,28 @@ public abstract class Wagon {
         // TODO provide an iterative implementation,
         //   using attach- and detach methods of this class
 
-        Wagon tempWagon = null;
-        Wagon currentWagon = getFirstWagonAttached();
-
+        // Safe the original last wagon to return it
         Wagon originaLastWagon = getLastWagonAttached();
 
+        // Detatch the wagon chain to reverse from everything in front
+        Wagon detachedWagons = this.detachFront();
+
+        // Loop over all items and reverse their previous and next wagon
+        Wagon tempWagon = null;
+        Wagon currentWagon = this;
         while (currentWagon != null) {
             tempWagon = currentWagon.previousWagon;
-//            attachTail();
-//            detachFront();
-//            detachTail();
-//            wagon1.reAttachTo(wagon2);
 
-
-//            currentWagon.detachFront();
             currentWagon.previousWagon = currentWagon.nextWagon;
             currentWagon.nextWagon = tempWagon;
 
             currentWagon = currentWagon.previousWagon;
         }
 
-        return originaLastWagon;
+        // If detatched wagons exist, re-attach the reversed sequence as a tail
+        if (detachedWagons != null) detachedWagons.attachTail(this.previousWagon);
 
+        return originaLastWagon;
     }
 
     @Override
