@@ -1,8 +1,5 @@
 package models;
 
-import java.util.Iterator;
-import java.util.StringJoiner;
-
 public abstract class Wagon {
     protected int id;               // some unique ID of a Wagon
     private Wagon nextWagon;        // another wagon that is appended at the tail of this wagon
@@ -170,7 +167,7 @@ public abstract class Wagon {
         // TODO
         // Attach this wagons tail to the wagon infront
         if (hasPreviousWagon() && hasNextWagon()) {
-            this.nextWagon.reAttachTo(previousWagon) ;
+            this.nextWagon.reAttachTo(previousWagon);
         } else {
             this.detachTail();
         }
@@ -219,13 +216,9 @@ public abstract class Wagon {
 
     }
 
-    // TODO string representation of a Wagon
-
     @Override
     public String toString() {
-        return new StringJoiner(", ", "[", "]")
-                .add(Wagon.class.getSimpleName() + "-" + id)
-                .toString();
+        return "[Wagon-%d]".formatted(this.id);
     }
 
     public void showAllWagons(Wagon wagon) {
