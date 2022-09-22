@@ -80,10 +80,15 @@ public class Train {
         if (firstWagon == null) return null;
 
         Wagon wagon = firstWagon;
-        while (((wagon = wagon.getNextWagon()) != null)) {
-            if (wagon.getNextWagon() == null) return wagon;
+        while (wagon != null && wagon.hasNextWagon()) {
+            System.out.println(wagon);
+            wagon = wagon.getNextWagon();
         }
-        return null;
+//
+//        while (((wagon = wagon.getNextWagon()) != null)) {
+//            if (wagon.getNextWagon() == null) return wagon;
+//        }
+        return wagon;
     }
 
     /**
@@ -132,7 +137,7 @@ public class Train {
 
         int i = 1;
         Wagon nextWagon = firstWagon;
-        while(nextWagon != null) {
+        while (nextWagon != null) {
             if (i == position) return nextWagon;
             nextWagon = nextWagon.getNextWagon();
             i++;
@@ -150,7 +155,7 @@ public class Train {
      */
     public Wagon findWagonById(int wagonId) {
         Wagon nextWagon = firstWagon;
-        while(nextWagon != null) {
+        while (nextWagon != null) {
             if (nextWagon.getId() == wagonId) return nextWagon;
             nextWagon = nextWagon.getNextWagon();
         }
@@ -168,12 +173,13 @@ public class Train {
      * @return whether type and capacity of this train can accommodate attachment of the sequence
      */
     public boolean canAttach(Wagon wagon) {
+        // checking if the wagon matches the type of the train
         if (firstWagon == null || (isPassengerTrain() && wagon instanceof PassengerWagon) ||
                 (isFreightTrain() && wagon instanceof FreightWagon)) {
+            // checking if adding this wagon won't exceed the max wagon limit
             if (getNumberOfWagons() + wagon.getSequenceLength() <= this.engine.getMaxWagons()) {
-                if (findWagonById(wagon.getId()) == null) {
-                    return true;
-                }
+                // checking if the train doesn't already has this wagon.
+                return (findWagonById(wagon.getId()) == null);
             }
             // continue
         }
@@ -191,9 +197,25 @@ public class Train {
      */
     public boolean attachToRear(Wagon wagon) {
         if (!canAttach(wagon)) return false;
-        // todo
 
-        return false;
+        Wagon nextWagon = wagon;
+        while (nextWagon != null) {
+            // getting the next wagon of this current wagon.
+            Wagon originalNextWagon = nextWagon.getNextWagon();
+            // detaching the tail from the current wagon.
+            nextWagon.detachTail();
+            // detaching the front from the current wagon.
+            nextWagon.detachFront();
+            if (hasWagons()) {
+                // if this train has wagons, attach the nextWagon to the end of the train (end of first wagon of this train).
+                firstWagon.getLastWagonAttached().attachTail(nextWagon);
+            } else {
+                // if this train does not have any wagons, setting the first wagon to the next wagon.
+                firstWagon = nextWagon;
+            }
+            nextWagon = originalNextWagon;
+        }
+        return true;
     }
 
     /**
@@ -208,8 +230,21 @@ public class Train {
      */
     public boolean insertAtFront(Wagon wagon) {
         // TODO
+        if (!canAttach(wagon)) return false;
 
-        return false;
+        if (firstWagon == null) {
+            wagon.detachFront();
+            firstWagon = wagon;
+            return true;
+        }
+
+        wagon.detachFront();
+        Wagon lastWaggonOfSequence = wagon.getLastWagonAttached();
+        lastWaggonOfSequence.setNextWagon(firstWagon);
+        firstWagon.setPreviousWagon(wagon);
+
+        firstWagon = wagon;
+        return true;
     }
 
     /**

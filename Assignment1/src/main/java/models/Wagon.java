@@ -30,6 +30,14 @@ public abstract class Wagon {
         return previousWagon;
     }
 
+    public void setNextWagon(Wagon nextWagon) {
+        this.nextWagon = nextWagon;
+    }
+
+    public void setPreviousWagon(Wagon previousWagon) {
+        this.previousWagon = previousWagon;
+    }
+
     /**
      * @return whether this wagon has a wagon appended at the tail
      */
@@ -96,8 +104,7 @@ public abstract class Wagon {
             throw new IllegalStateException("%s has already been attached to %s".formatted(tail.toString(), tail.getPreviousWagon().toString()));
         }
 
-//        System.out.println("Attaching " + tail + "behind " + getId());
-        nextWagon = tail;
+        this.nextWagon = tail;
         tail.previousWagon = this;
     }
 
@@ -112,11 +119,8 @@ public abstract class Wagon {
 
         Wagon detachedTail = nextWagon;
 
-        nextWagon.previousWagon = null;
-        nextWagon = null;
-
-        // TODO detach the tail from this wagon (sustaining the invariant propositions).
-        //  and return the head wagon of that tail
+        nextWagon.setPreviousWagon(null);
+        setNextWagon(null);
 
         return detachedTail;
     }
@@ -129,15 +133,12 @@ public abstract class Wagon {
      * or <code>null</code> if it had no previousWagon.
      */
     public Wagon detachFront() {
-        // TODO detach this wagon from its predecessor (sustaining the invariant propositions).
-        //   and return that predecessor
-
         if (!hasPreviousWagon()) return null;
 
         Wagon detachedFront = previousWagon;
 
-        previousWagon.nextWagon = null;
-        previousWagon = null;
+        previousWagon.setNextWagon(null);
+        setPreviousWagon(null);
 
         return detachedFront;
     }
