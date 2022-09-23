@@ -74,7 +74,6 @@ public abstract class Wagon {
      * including this wagon itself.
      */
     public int getSequenceLength() {
-        // TODO traverse the sequence and find its length
         int sequenceLength = 1;
         Wagon currentWagon = this;
 
@@ -152,11 +151,8 @@ public abstract class Wagon {
      * @param front the wagon to which this wagon must be attached to.
      */
     public void reAttachTo(Wagon front) {
-        // TODO detach any existing connections that will be rearranged
         this.detachFront();
         front.detachTail();
-
-        // TODO attach this wagon to its new predecessor front (sustaining the invariant propositions).
         front.attachTail(this);
     }
 
@@ -165,8 +161,7 @@ public abstract class Wagon {
      * and reconnects its tail to the wagon in front of it, if any.
      */
     public void removeFromSequence() {
-        // TODO
-        // Attach this wagons tail to the wagon infront
+        // Attach this wagons tail to the wagon in front
         if (hasPreviousWagon() && hasNextWagon()) {
             this.nextWagon.reAttachTo(previousWagon);
         } else {
@@ -190,9 +185,6 @@ public abstract class Wagon {
      * @return the new start Wagon of the reversed sequence (with is the former last Wagon of the original sequence)
      */
     public Wagon reverseSequence() {
-        // TODO provide an iterative implementation,
-        //   using attach- and detach methods of this class
-
         // Safe the original last wagon to return it
         Wagon originaLastWagon = getLastWagonAttached();
 

@@ -23,5 +23,4 @@ public class Locomotive {
         return "[Loc-%d]".formatted(this.locNumber);
     }
 
-    // TODO
 }

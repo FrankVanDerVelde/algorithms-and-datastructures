@@ -34,7 +34,6 @@ public class WagonTest {
         checkRepresentationInvariant(freightWagon2);
     }
     public static void checkRepresentationInvariant(Wagon wagon) {
-        // TODO check the nextWagon and previousWagon representation invariants of wagon
         assertTrue(!wagon.hasNextWagon() || wagon == wagon.getNextWagon().getPreviousWagon(),
                 String.format("Wagon %s should be the previous wagon of its next wagon, if any", wagon));
         assertTrue(!wagon.hasPreviousWagon() || wagon == wagon.getPreviousWagon().getNextWagon(),

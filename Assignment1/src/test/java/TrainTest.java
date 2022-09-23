@@ -64,8 +64,6 @@ public class TrainTest {
         checkRepresentationInvariant(freightTrain);
     }
     public static void checkRepresentationInvariant(Train train) {
-        // TODO check all aspects of the representation invariant of a train and its wagons
-
         assertFalse(train.hasWagons() && train.getFirstWagon().hasPreviousWagon(),
                 "The first wagon in a train should not have a previous wagon");
         //  check the representation invariant of each wagon
