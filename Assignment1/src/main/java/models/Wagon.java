@@ -68,21 +68,17 @@ public abstract class Wagon {
         return previousWagon.getFirstWagonAttached();
     }
 
-
     /**
      * @return the length of the sequence of wagons towards the end of its tail
      * including this wagon itself.
      */
     public int getSequenceLength() {
-        int sequenceLength = 1;
-        Wagon currentWagon = this;
+        // TODO traverse the sequence and find its length
+        if (!hasNextWagon()) return 1;
 
-        while (currentWagon.nextWagon != null) {
-            currentWagon = currentWagon.nextWagon;
-            sequenceLength++;
-        }
-        return sequenceLength;
+        return 1 + nextWagon.getSequenceLength();
     }
+
 
     /**
      * Attaches the tail wagon and its connected successors behind this wagon,
