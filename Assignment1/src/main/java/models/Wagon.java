@@ -18,22 +18,42 @@ public abstract class Wagon {
         this.id = wagonId;
     }
 
+    /**
+     * Get the ID of this wagon.
+     * @return The ID of this wagon.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Get the next wagon in the sequence.
+     * @return The next wagon.
+     */
     public Wagon getNextWagon() {
         return nextWagon;
     }
 
+    /**
+     * Get the previous wagon in the sequence.
+     * @return The previous wagon.
+     */
     public Wagon getPreviousWagon() {
         return previousWagon;
     }
 
+    /**
+     * Set the next wagon in the sequence.
+     * @param nextWagon the new next wagon.
+     */
     public void setNextWagon(Wagon nextWagon) {
         this.nextWagon = nextWagon;
     }
 
+    /**
+     * Set the previous wagon of the sequence.
+     * @param previousWagon the new previous wagon.
+     */
     public void setPreviousWagon(Wagon previousWagon) {
         this.previousWagon = previousWagon;
     }
@@ -63,6 +83,10 @@ public abstract class Wagon {
         return nextWagon.getLastWagonAttached();
     }
 
+    /**
+     * Get the first wagon of this sequence.
+     * @return The first wagon of this sequence.
+     */
     public Wagon getFirstWagonAttached() {
         if (previousWagon == null) return this;
         return previousWagon.getFirstWagonAttached();
@@ -214,7 +238,11 @@ public abstract class Wagon {
         return "[Wagon-%d]".formatted(this.id);
     }
 
-    public void showAllWagons(Wagon wagon) {
+    /**
+     * A debug method that prints the entire sequence of wagons from the front to the tail.
+     * @param wagon the wagon to start printing from.
+     */
+    public static void showAllWagons(Wagon wagon) {
 
         Wagon nextWagon = wagon.getFirstWagonAttached();
         while (nextWagon != null) {

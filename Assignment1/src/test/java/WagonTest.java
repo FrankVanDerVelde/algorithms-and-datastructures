@@ -346,7 +346,7 @@ public class WagonTest {
         // reverse part of the sequence
         Wagon rev = passengerWagon3.reverseSequence();
 
-        rev.showAllWagons(rev);
+        Wagon.showAllWagons(rev);
 
         assertEquals(2, rev.getSequenceLength(), "After reversing the middle wagon, the sequence length should remain the same");
         assertEquals(passengerWagon4, rev);

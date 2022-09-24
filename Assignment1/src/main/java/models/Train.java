@@ -17,31 +17,64 @@ public class Train {
         this.origin = origin;
     }
 
-    /* three helper methods that are usefull in other methods */
+    /**
+     * Get whether this train has any waggons attached to it.
+     * @return True if this train has any wagons, false otherwise.
+     */
     public boolean hasWagons() {
         return firstWagon != null;
     }
 
+    /**
+     * Get whether this train is passenger train.
+     *
+     * @return True if this train is a passenger train, false otherwise.
+     */
     public boolean isPassengerTrain() {
         return firstWagon instanceof PassengerWagon;
     }
 
+    /**
+     * Get whether this train is a freight train.
+     *
+     * @return True if this train is a freight train, false otherwise.
+     */
     public boolean isFreightTrain() {
         return firstWagon instanceof FreightWagon;
     }
 
+    /**
+     * Get the locomotive of this train.
+     *
+     * @return the locomotive
+     */
     public Locomotive getEngine() {
         return engine;
     }
 
+    /**
+     * Get the origin of the train.
+     *
+     * @return the origin of the train.
+     */
     public String getOrigin() {
         return origin;
     }
 
+    /**
+     * Get the destination of this train.
+     *
+     * @return The destination.
+     */
     public String getDestination() {
         return destination;
     }
 
+    /**
+     * Get the first wagon of the train.
+     *
+     * @return the first wagon of the train.
+     */
     public Wagon getFirstWagon() {
         return firstWagon;
     }
@@ -168,6 +201,7 @@ public class Train {
      * @return whether type and capacity of this train can accommodate attachment of the sequence
      */
     public boolean canAttach(Wagon wagon) {
+        if (wagon == null) return false;
         // checking if the wagon matches the type of the train
         if (firstWagon == null || (isPassengerTrain() && wagon instanceof PassengerWagon) ||
                 (isFreightTrain() && wagon instanceof FreightWagon)) {
@@ -344,12 +378,8 @@ public class Train {
     public boolean splitAtPosition(int position, Train toTrain) {
         if (position < 1 || position > getNumberOfWagons() + 1) return false;
 
-        Wagon wagonAtPosition;
-        if (position == 1) {
-            wagonAtPosition = firstWagon;
-        } else {
-            wagonAtPosition = findWagonAtPosition(position);
-        }
+        Wagon wagonAtPosition = findWagonAtPosition(position);
+
         if (!toTrain.canAttach(wagonAtPosition)) return false;
 
         if (position == 1) {
