@@ -364,4 +364,30 @@ public class WagonTest {
         assertEquals(passengerWagon1, passengerWagon2.getPreviousWagon());
         assertEquals(passengerWagon4, passengerWagon2.getNextWagon());
     }
+
+    /**
+     * Make sure reversing doesn't cause the first and the last wagons to be attatched on the wrong ends effectively creating a circle
+     */
+    @Test
+    public void T10_WagonSequenceShouldNotBeACircle() {
+        passengerWagon1.attachTail(passengerWagon2);
+        passengerWagon2.attachTail(passengerWagon3);
+        passengerWagon3.attachTail(passengerWagon4);
+
+        assertThrows(IllegalArgumentException.class, () -> passengerWagon4.attachTail(passengerWagon4));
+        assertThrows(IllegalArgumentException.class, () -> passengerWagon4.setPreviousWagon(passengerWagon4));
+        assertThrows(IllegalArgumentException.class, () -> passengerWagon4.setNextWagon(passengerWagon4));
+        assertThrows(IllegalArgumentException.class, () -> passengerWagon4.reAttachTo(passengerWagon4));
+
+        passengerWagon3.reverseSequence();
+
+        assertSame(passengerWagon3.getFirstWagonAttached().getPreviousWagon(), passengerWagon3.getLastWagonAttached().getNextWagon());
+    }
+
+    @Test
+    public void T11_ConstructorValidity() {
+        assertThrows(IllegalArgumentException.class, () -> new PassengerWagon(1, -1));
+        assertThrows(IllegalArgumentException.class, () -> new FreightWagon(1, -1));
+    }
+
 }

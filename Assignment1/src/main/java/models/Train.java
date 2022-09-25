@@ -12,6 +12,10 @@ public class Train {
      */
 
     public Train(Locomotive engine, String origin, String destination) {
+        if (engine == null) {
+            throw new IllegalArgumentException("The engine must not be null.");
+        }
+
         this.engine = engine;
         this.destination = destination;
         this.origin = origin;
@@ -333,6 +337,7 @@ public class Train {
      * @return whether the move could be completed successfully
      */
     public boolean moveOneWagon(int wagonId, Train toTrain) {
+        if (toTrain == null) return false;
         Wagon wagon = findWagonById(wagonId);
         if (wagon == null) return false;
 
@@ -376,7 +381,7 @@ public class Train {
      * @return whether the move could be completed successfully
      */
     public boolean splitAtPosition(int position, Train toTrain) {
-        if (position < 1 || position > getNumberOfWagons() + 1) return false;
+        if (toTrain == null || position < 1 || position > getNumberOfWagons() + 1) return false;
 
         Wagon wagonAtPosition = findWagonAtPosition(position);
 

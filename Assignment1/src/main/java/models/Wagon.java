@@ -47,6 +47,9 @@ public abstract class Wagon {
      * @param nextWagon the new next wagon.
      */
     public void setNextWagon(Wagon nextWagon) {
+        if (nextWagon == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        }
         this.nextWagon = nextWagon;
     }
 
@@ -55,6 +58,9 @@ public abstract class Wagon {
      * @param previousWagon the new previous wagon.
      */
     public void setPreviousWagon(Wagon previousWagon) {
+        if (previousWagon == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        }
         this.previousWagon = previousWagon;
     }
 
@@ -121,7 +127,9 @@ public abstract class Wagon {
      *                               or:   "%s has already been attached to %s"
      */
     public void attachTail(Wagon tail) {
-        if (hasNextWagon()) {
+        if (tail == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        } else if (hasNextWagon()) {
             throw new IllegalStateException("%s is already pulling %s".formatted(this.toString(), this.nextWagon.toString()));
         } else if (tail.hasPreviousWagon()) {
             throw new IllegalStateException("%s has already been attached to %s".formatted(tail.toString(), tail.getPreviousWagon().toString()));
@@ -175,6 +183,9 @@ public abstract class Wagon {
      * @param front the wagon to which this wagon must be attached to.
      */
     public void reAttachTo(Wagon front) {
+        if (front == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        }
         this.detachFront();
         front.detachTail();
         front.attachTail(this);

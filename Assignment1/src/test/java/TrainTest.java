@@ -409,4 +409,16 @@ public class TrainTest {
         trainWithoutWagons.reverse();
         assertEquals(0, trainWithoutWagons.getNumberOfWagons());
     }
+
+    @Test
+    public void T23_checkNulls() {
+        assertThrows(IllegalArgumentException.class, () -> new Train(null, null, null));
+        assertThrows(IllegalArgumentException.class, () -> new Locomotive(1, -1));
+        assertFalse(trainWithoutWagons.canAttach(null));
+        assertFalse(trainWithoutWagons.attachToRear(null));
+        assertFalse(passengerTrain.insertAtFront(null));
+        assertFalse(passengerTrain.splitAtPosition(1, null));
+        assertFalse(passengerTrain.moveOneWagon(8001, null));
+    }
+
 }

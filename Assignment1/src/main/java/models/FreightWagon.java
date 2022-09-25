@@ -6,6 +6,9 @@ public class FreightWagon extends Wagon {
 
     public FreightWagon(int wagonId, int maxWeight) {
         super(wagonId);
+        if (maxWeight < 0) {
+            throw new IllegalArgumentException("The weight of the train must be positive");
+        }
         this.maxWeight = maxWeight;
     }
 
