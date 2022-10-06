@@ -199,16 +199,18 @@ public abstract class Wagon {
         Wagon detachedWagons = this.detachFront();
 
         // Loop over all items and reverse their previous and next wagon
-        Wagon tempWagon = null;
+        Wagon tempPreviousWagonRef = null;
         Wagon currentWagon = this;
+
         while (currentWagon != null) {
-            tempWagon = currentWagon.previousWagon;
+            tempPreviousWagonRef = currentWagon.previousWagon;
 
             currentWagon.previousWagon = currentWagon.nextWagon;
-            currentWagon.nextWagon = tempWagon;
+            currentWagon.nextWagon = tempPreviousWagonRef;
 
             currentWagon = currentWagon.previousWagon;
         }
+
 
         // If detatched wagons exist, re-attach the reversed sequence as a tail
         if (detachedWagons != null) detachedWagons.attachTail(this.previousWagon);
@@ -227,7 +229,6 @@ public abstract class Wagon {
         while (nextWagon != null) {
             System.out.println(nextWagon);
             nextWagon = nextWagon.getNextWagon();
-
         }
 
     }
