@@ -18,16 +18,50 @@ public abstract class Wagon {
         this.id = wagonId;
     }
 
+    /**
+     * Get the ID of this wagon.
+     * @return The ID of this wagon.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Get the next wagon in the sequence.
+     * @return The next wagon.
+     */
     public Wagon getNextWagon() {
         return nextWagon;
     }
 
+    /**
+     * Get the previous wagon in the sequence.
+     * @return The previous wagon.
+     */
     public Wagon getPreviousWagon() {
         return previousWagon;
+    }
+
+    /**
+     * Set the next wagon in the sequence.
+     * @param nextWagon the new next wagon.
+     */
+    public void setNextWagon(Wagon nextWagon) {
+        if (nextWagon == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        }
+        this.nextWagon = nextWagon;
+    }
+
+    /**
+     * Set the previous wagon of the sequence.
+     * @param previousWagon the new previous wagon.
+     */
+    public void setPreviousWagon(Wagon previousWagon) {
+        if (previousWagon == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        }
+        this.previousWagon = previousWagon;
     }
 
     /**
@@ -55,11 +89,14 @@ public abstract class Wagon {
         return nextWagon.getLastWagonAttached();
     }
 
+    /**
+     * Get the first wagon of this sequence.
+     * @return The first wagon of this sequence.
+     */
     public Wagon getFirstWagonAttached() {
         if (previousWagon == null) return this;
         return previousWagon.getFirstWagonAttached();
     }
-
 
     /**
      * @return the length of the sequence of wagons towards the end of its tail
@@ -67,15 +104,11 @@ public abstract class Wagon {
      */
     public int getSequenceLength() {
         // TODO traverse the sequence and find its length
-        int sequenceLength = 1;
-        Wagon currentWagon = this;
+        if (!hasNextWagon()) return 1;
 
-        while (currentWagon.nextWagon != null) {
-            currentWagon = currentWagon.nextWagon;
-            sequenceLength++;
-        }
-        return sequenceLength;
+        return 1 + nextWagon.getSequenceLength();
     }
+
 
     /**
      * Attaches the tail wagon and its connected successors behind this wagon,
@@ -90,14 +123,15 @@ public abstract class Wagon {
      *                               or:   "%s has already been attached to %s"
      */
     public void attachTail(Wagon tail) {
-        if (hasNextWagon()) {
+        if (tail == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        } else if (hasNextWagon()) {
             throw new IllegalStateException("%s is already pulling %s".formatted(this.toString(), this.nextWagon.toString()));
         } else if (tail.hasPreviousWagon()) {
             throw new IllegalStateException("%s has already been attached to %s".formatted(tail.toString(), tail.getPreviousWagon().toString()));
         }
 
-//        System.out.println("Attaching " + tail + "behind " + getId());
-        nextWagon = tail;
+        this.nextWagon = tail;
         tail.previousWagon = this;
     }
 
@@ -112,11 +146,8 @@ public abstract class Wagon {
 
         Wagon detachedTail = nextWagon;
 
-        nextWagon.previousWagon = null;
-        nextWagon = null;
-
-        // TODO detach the tail from this wagon (sustaining the invariant propositions).
-        //  and return the head wagon of that tail
+        nextWagon.setPreviousWagon(null);
+        setNextWagon(null);
 
         return detachedTail;
     }
@@ -129,15 +160,12 @@ public abstract class Wagon {
      * or <code>null</code> if it had no previousWagon.
      */
     public Wagon detachFront() {
-        // TODO detach this wagon from its predecessor (sustaining the invariant propositions).
-        //   and return that predecessor
-
         if (!hasPreviousWagon()) return null;
 
         Wagon detachedFront = previousWagon;
 
-        previousWagon.nextWagon = null;
-        previousWagon = null;
+        previousWagon.setNextWagon(null);
+        setPreviousWagon(null);
 
         return detachedFront;
     }
@@ -151,11 +179,11 @@ public abstract class Wagon {
      * @param front the wagon to which this wagon must be attached to.
      */
     public void reAttachTo(Wagon front) {
-        // TODO detach any existing connections that will be rearranged
+        if (front == this) {
+            throw new IllegalArgumentException("Cannot attach a wagon to itself");
+        }
         this.detachFront();
         front.detachTail();
-
-        // TODO attach this wagon to its new predecessor front (sustaining the invariant propositions).
         front.attachTail(this);
     }
 
@@ -164,8 +192,7 @@ public abstract class Wagon {
      * and reconnects its tail to the wagon in front of it, if any.
      */
     public void removeFromSequence() {
-        // TODO
-        // Attach this wagons tail to the wagon infront
+        // Attach this wagons tail to the wagon in front
         if (hasPreviousWagon() && hasNextWagon()) {
             this.nextWagon.reAttachTo(previousWagon);
         } else {
@@ -189,9 +216,6 @@ public abstract class Wagon {
      * @return the new start Wagon of the reversed sequence (with is the former last Wagon of the original sequence)
      */
     public Wagon reverseSequence() {
-        // TODO provide an iterative implementation,
-        //   using attach- and detach methods of this class
-
         // Safe the original last wagon to return it
         Wagon originaLastWagon = getLastWagonAttached();
 
@@ -223,7 +247,11 @@ public abstract class Wagon {
         return "[Wagon-%d]".formatted(this.id);
     }
 
-    public void showAllWagons(Wagon wagon) {
+    /**
+     * A debug method that prints the entire sequence of wagons from the front to the tail.
+     * @param wagon the wagon to start printing from.
+     */
+    public static void showAllWagons(Wagon wagon) {
 
         Wagon nextWagon = wagon.getFirstWagonAttached();
         while (nextWagon != null) {

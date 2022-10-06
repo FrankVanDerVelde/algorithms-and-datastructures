@@ -1,11 +1,14 @@
 package models;
 
 public class Locomotive {
-    private int locNumber;
-    private int maxWagons;
 
+    private final int locNumber;
+    private final int maxWagons;
 
     public Locomotive(int locNumber, int maxWagons) {
+        if (maxWagons < 0) {
+            throw new IllegalArgumentException("The maximum number of wagons must be positive");
+        }
         this.locNumber = locNumber;
         this.maxWagons = maxWagons;
     }
@@ -23,5 +26,4 @@ public class Locomotive {
         return "[Loc-%d]".formatted(this.locNumber);
     }
 
-    // TODO
 }

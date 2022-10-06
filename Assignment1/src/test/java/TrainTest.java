@@ -64,8 +64,6 @@ public class TrainTest {
         checkRepresentationInvariant(freightTrain);
     }
     public static void checkRepresentationInvariant(Train train) {
-        // TODO check all aspects of the representation invariant of a train and its wagons
-
         assertFalse(train.hasWagons() && train.getFirstWagon().hasPreviousWagon(),
                 "The first wagon in a train should not have a previous wagon");
         //  check the representation invariant of each wagon
@@ -198,32 +196,51 @@ public class TrainTest {
 
     @Test
     public void T17_CanAttachToRear() {
+        System.out.println(passengerTrain);
         assertTrue(trainWithoutWagons.attachToRear(passengerTrain.getLastWagonAttached()),
                 "can attach a single wagon to an empty train");
         assertEquals(8007, trainWithoutWagons.getFirstWagon().getId(),
                 "attachToRear should disconnect and reattach the given head wagon");
 
+        System.out.println("train without wagons: " + trainWithoutWagons);
+        System.out.println("passenger train: " + passengerTrain);
+
         assertTrue(trainWithoutWagons.attachToRear(passengerTrain.getLastWagonAttached()),
                 "can attach a single wagon at the rear of a train");
+        System.out.println("Train without wagons: " + trainWithoutWagons);
         assertEquals(8006, trainWithoutWagons.getLastWagonAttached().getId(),
                 "attachToRear should disconnect and reattach the given head wagon to the rear");
 
+        System.out.println("yeehaw");
+
         assertTrue(trainWithoutWagons.attachToRear(passengerWagon8002),
                 "can attach a sequence at at the rear of a train");
+        System.out.println(passengerWagon8002);
+        System.out.println("yeehaw2");
+        System.out.println("train without wagons: " + trainWithoutWagons);
+
         assertEquals(8002, trainWithoutWagons.findWagonAtPosition(3).getId(),
                 "attachToRear should disconnect and reattach the head wagon to the rear");
+
+        System.out.println("yeehaw3");
         assertEquals(8003, trainWithoutWagons.findWagonAtPosition(4).getId(),
                 "attachToRear should disconnect and reattach the complete sequence to the rear");
+        System.out.println("yeehaw4");
         assertEquals(8004, trainWithoutWagons.findWagonAtPosition(5).getId(),
                 "attachToRear should disconnect and reattach the complete sequence to the rear");
+        System.out.println("yeehaw5");
         assertEquals(8005, trainWithoutWagons.getLastWagonAttached().getId(),
                 "attachToRear should disconnect and reattach the complete sequence to the rear");
+        System.out.println("yeehaw6");
 
         assertFalse(trainWithoutWagons.attachToRear(passengerWagon8002),
                 "cannot attachToRear a wagon that is already on the train");
+        System.out.println("yeehaw7");
 
         assertEquals(6, trainWithoutWagons.getNumberOfWagons());
+        System.out.println("yeehaw8");
         assertEquals(1, passengerTrain.getNumberOfWagons());
+        System.out.println("yeehaw9");
     }
 
     @Test
@@ -392,4 +409,16 @@ public class TrainTest {
         trainWithoutWagons.reverse();
         assertEquals(0, trainWithoutWagons.getNumberOfWagons());
     }
+
+    @Test
+    public void T23_checkNulls() {
+        assertThrows(IllegalArgumentException.class, () -> new Train(null, null, null));
+        assertThrows(IllegalArgumentException.class, () -> new Locomotive(1, -1));
+        assertFalse(trainWithoutWagons.canAttach(null));
+        assertFalse(trainWithoutWagons.attachToRear(null));
+        assertFalse(passengerTrain.insertAtFront(null));
+        assertFalse(passengerTrain.splitAtPosition(1, null));
+        assertFalse(passengerTrain.moveOneWagon(8001, null));
+    }
+
 }
