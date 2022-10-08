@@ -15,11 +15,8 @@ public class TrafficTracker {
     private OrderedList<Violation> violations;      // the accumulation of all offences by car and by city
 
     public TrafficTracker() {
-        // TODO initialize cars with an empty ordered list which sorts items by licensePlate.
-        //  initalize violations with an empty ordered list which sorts items by car and city.
-        //  Use your generic implementation class OrderedArrayList
-
-
+        this.cars = new OrderedArrayList<>();
+        this.violations = new OrderedArrayList<>();
     }
 
     /**

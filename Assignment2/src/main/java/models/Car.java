@@ -27,14 +27,10 @@ public class Car implements Comparable<Car> {
 
     public Car(String licensePlate) {
         // base constructor for unregistered and foreign cars
-        this.licensePlate = licensePlate;
-        this.emissionCategory = 0;
-        this.carType = CarType.Unknown;
-        this.fuelType = FuelType.Unknown;
-        this.dateOfAdmission = LocalDate.EPOCH;
+        this(licensePlate, 0, CarType.Unknown, FuelType.Unknown, LocalDate.EPOCH);
     }
     public Car(String licensePlate, int emissionCategory, CarType carType, FuelType fuelType, LocalDate dateOfAdmission) {
-        this(licensePlate);
+        this.licensePlate = licensePlate;
         this.emissionCategory = emissionCategory;
         this.carType = carType;
         this.fuelType = fuelType;
