@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
@@ -121,14 +122,7 @@ public class OrderedArrayList<E>
         }
 
         // nothing was found during binary search, moving on to linear.
-        final int totalSize = size();
-        if (nSorted < totalSize) {
-            for (int i = nSorted; i < totalSize; i++) {
-                if (this.ordening.compare(get(i), searchItem) == 0) return i;
-            }
-        }
-
-        return -1;  // nothing was found ???
+        return linearIndexOf(searchItem);
     }
 
     /**
@@ -145,11 +139,57 @@ public class OrderedArrayList<E>
         // TODO implement a recursive binary search on the sorted section of the arrayList, 0 <= index < nSorted
         //   to find the position of an item that matches searchItem (this.ordening comparator yields a 0 result)
 
+        int recursiveIndex = recursiveIndexOf(searchItem, 0, nSorted - 1);
+        if (recursiveIndex != -1) return recursiveIndex;
 
-        // TODO if no match was found, attempt a linear search of searchItem in the section nSorted <= index < size()
+        // nothing was found during binary search, moving on to linear.
+        return linearIndexOf(searchItem);
+    }
 
+    /**
+     * Search for an item linearly in the unsorted section of the list.
+     * @param searchItem The item to search for.
+     * @return The index of the item, or -1 if not found.
+     */
+    private int linearIndexOf(E searchItem) {
+        final int totalSize = size();
+        if (nSorted < totalSize) {
+            for (int i = nSorted; i < totalSize; i++) {
+                if (this.ordening.compare(get(i), searchItem) == 0) return i;
+            }
+        }
 
-        return -1;  // nothing was found ???
+        // returning -1 if nothing was found during linear search.
+        return -1;
+    }
+
+    /**
+     * Search for an item recursively between two bounds.
+     * @param searchItem The item to search for.
+     * @param left The left bound.
+     * @param right The right bound.
+     * @return The index of the item, or -1 if not found.
+     */
+    private int recursiveIndexOf(E searchItem, int left, int right) {
+        if (left > right) return -1;
+        int mid = left + (right - left) / 2;
+
+        // checking if the searched item is equal, below, or higher in the list.
+        // -1 is lower, 0 is equal, +1 is higher.
+        final int compare = ordening.compare(searchItem, get(mid));
+
+        if (compare == 0) {
+            // they're the same item, returning.
+            return mid;
+        } else if (compare < 0) {
+            // the searched item is on the left side of the list.
+            // changing the right bounds to the middle (ignore current mid)
+            return recursiveIndexOf(searchItem, left, mid - 1);
+        } else {
+            // the searched item is on the right side of the list.
+            // changing the left bounds to the middle (ignore current mid)
+            return recursiveIndexOf(searchItem, mid + 1, right);
+        }
     }
 
 
