@@ -13,20 +13,8 @@ public class Violation {
         this.offencesCount = 1;
     }
 
-//    public class DragQueenAgeAndGenderComparator implements Comparator<DragQueen> {
-//        @Override
-//        public int compare(DragQueen o1, DragQueen o2) {
-//            int comparison = o1.getGender().compareTo(o2.getGender());
-//            if (comparison == 0) {
-//                return Integer.compare(o1.getAge(), o2.getAge());
-//            }
-//            return comparison;
-//        }
-//    }
-
-
     public static int compareByLicensePlateAndCity(Violation v1, Violation v2) {
-        // TODO compute the ordening of v1 vs v2 as per conventions of Comparator<Violation>
+        if (v1 == null || v2 == null) throw new IllegalArgumentException("Violation cannot be null");
 
         int carComparison = v1.getCar().getLicensePlate().compareTo(v2.getCar().getLicensePlate());
         if (carComparison == 0) {
@@ -35,8 +23,6 @@ public class Violation {
 
        return carComparison;   // replace by a proper outcome
     }
-
-
 
     /**
      * Aggregates this violation with the other violation by adding their counts and

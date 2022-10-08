@@ -15,8 +15,8 @@ public class TrafficTracker {
     private OrderedList<Violation> violations;      // the accumulation of all offences by car and by city
 
     public TrafficTracker() {
-        this.cars = new OrderedArrayList<>();
-        this.violations = new OrderedArrayList<>();
+        this.cars = new OrderedArrayList<>(Comparator.comparing(Car::getLicensePlate));
+        this.violations = new OrderedArrayList<>(Violation::compareByLicensePlateAndCity);
     }
 
     /**
