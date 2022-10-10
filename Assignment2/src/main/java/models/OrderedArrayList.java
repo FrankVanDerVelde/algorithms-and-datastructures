@@ -1,8 +1,8 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
@@ -101,7 +101,7 @@ public class OrderedArrayList<E>
         // or when it found nothing or something on the right side.
         while (left <= right) {
             // calculating the middle of the left and right
-            int mid = left + (right - left) / 2;
+            int mid = (right + left) / 2;
 
             // checking if the searched item is equal, below, or higher in the list.
             // -1 is lower, 0 is equal, +1 is higher.
@@ -148,6 +148,7 @@ public class OrderedArrayList<E>
 
     /**
      * Search for an item linearly in the unsorted section of the list.
+     *
      * @param searchItem The item to search for.
      * @return The index of the item, or -1 if not found.
      */
@@ -165,9 +166,10 @@ public class OrderedArrayList<E>
 
     /**
      * Search for an item recursively between two bounds.
+     *
      * @param searchItem The item to search for.
-     * @param left The left bound.
-     * @param right The right bound.
+     * @param left       The left bound.
+     * @param right      The right bound.
      * @return The index of the item, or -1 if not found.
      */
     private int recursiveIndexOf(E searchItem, int left, int right) {
@@ -214,10 +216,11 @@ public class OrderedArrayList<E>
             this.add(newItem);
             return true;
         } else {
-            // TODO retrieve the matched item and
-            //  replace the matched item in the list with the merger of the matched item and the newItem
+            E found = get(matchedItemIndex);
+            E apply = merger.apply(found, newItem);
 
-
+            this.remove(matchedItemIndex);
+            this.add(matchedItemIndex, apply);
             return false;
         }
     }
@@ -232,10 +235,9 @@ public class OrderedArrayList<E>
     public double aggregate(Function<E, Double> mapper) {
         double sum = 0.0;
 
-        // TODO loop over all items and use the mapper
-        //  to calculate and accumulate the contribution of each item
-
-
+        for (E item : this) {
+            sum += mapper.apply(item);
+        }
         return sum;
     }
 }
