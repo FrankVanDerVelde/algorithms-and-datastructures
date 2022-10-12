@@ -154,7 +154,7 @@ public class TrafficTracker {
         // TODO validate all detections against the purple criteria and
         //  merge any resulting offences into this.violations, accumulating offences per car and per city
         //  also keep track of the totalNumberOfOffences for reporting
-        for (Detection detection: newDetections) {
+        for (Detection detection : newDetections) {
             Violation violation = detection.validatePurple();
             if (violation != null) {
                 this.violations.merge(violation, Violation::combineOffencesCounts);
@@ -172,13 +172,7 @@ public class TrafficTracker {
      * @return the total amount of money recovered from all violations
      */
     public double calculateTotalFines() {
-
-        return this.violations.aggregate(
-                // TODO provide a calculator function for the specified fine scheme
-                //  of €25 per truck-offence and €35 per coach-offence
-
-                null  // replace this reference
-        );
+        return this.violations.aggregate(Violation::calculateRevenue);
     }
 
     /**
@@ -189,14 +183,37 @@ public class TrafficTracker {
      * @return a list of topNum items that provides the top aggregated violations
      */
     public List<Violation> topViolationsByCar(int topNumber) {
+        OrderedArrayList<Violation> newViolations = new OrderedArrayList<>(Comparator.comparingInt(Violation::getOffencesCount).reversed());
+
+        System.out.println("\n\nyeehaw:\n\n");
+        for (Violation violation : this.violations) {
+            newViolations.merge(violation, this::mergeViolationsByCar);
+        }
+        newViolations.sort();
+
+        newViolations.forEach(System.out::println);
+
+        System.out.println("\n\nyeehaw:\n\n");
+
+        return newViolations.subList(0, topNumber);
 
         // TODO merge all violations from this.violations into a new OrderedArrayList
         //   which orders and aggregates violations by city
         // TODO sort the new list by decreasing offencesCount.
         // TODO use .subList to return only the topNumber of violations from the sorted list
         //  (You may want to prepare/reuse a local private method for all this)
+    }
 
-        return null;  // replace this reference
+    private Violation mergeViolationsByCar(Violation violation1, Violation violation2) {
+        if (violation1.getCar() != null && violation1.getCar().equals(violation2.getCar())) {
+            final Violation violation = new Violation(
+                    violation1.getCar(),
+                    null
+            );
+            violation.setOffencesCount(violation1.getOffencesCount() + violation2.getOffencesCount());
+            return violation;
+        }
+        return violation1;
     }
 
     /**

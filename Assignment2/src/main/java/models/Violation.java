@@ -61,10 +61,22 @@ public class Violation {
         this.offencesCount = offencesCount;
     }
 
-    // TODO represent the violation in the format: licensePlate/city/offencesCount
+    public double calculateRevenue() {
+        if (car.getCarType() == Car.CarType.Truck) {
+            return offencesCount * 25;
+        } else if (car.getCarType() == Car.CarType.Coach){
+            return offencesCount * 35;
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
 
-        return "TODO:Violation.toString";   // replace by a proper outcome
+        return "%s/%s/%d".formatted(
+                this.car == null ? "null" : this.car.getLicensePlate(),
+                this.city == null ? "null" : this.city,
+                this.offencesCount
+        );
     }
 }
