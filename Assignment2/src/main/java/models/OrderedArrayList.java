@@ -2,7 +2,6 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
@@ -44,12 +43,28 @@ public class OrderedArrayList<E>
         this.nSorted = this.size();
     }
 
-    // TODO override the ArrayList.add(index, item), ArrayList.remove(index) and Collection.remove(object) methods
-    //  such that they both meet the ArrayList contract of these methods (see ArrayList JavaDoc)
-    //  and sustain the representation invariant of OrderedArrayList
-    //  (hint: only change nSorted as required to guarantee the representation invariant,
-    //   do not invoke a sort or reorder items otherwise differently than is specified by the ArrayList contract)
+    @Override
+    public void add(int index, E element) {
+        if (index < nSorted) {
+            nSorted = index-1;
+        }
+        super.add(index, element);
+    }
 
+    @Override
+    public E remove(int index) {
+        final int size = size();
+        if (index < 0 || index >= size) return null;
+
+        if (index < nSorted) nSorted--;
+        return super.remove(index);
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        int index = indexOf(o);
+        return remove(index) != null;
+    }
 
     @Override
     public void sort() {
@@ -89,9 +104,6 @@ public class OrderedArrayList<E>
      * @return the position index of the found item in the arrayList, or -1 if no item matches the search item.
      */
     public int indexOfByIterativeBinarySearch(E searchItem) {
-        // TODO implement an iterative binary search on the sorted section of the arrayList, 0 <= index < nSorted
-        //   to find the position of an item that matches searchItem (this.ordening comparator yields a 0 result)
-
         // the index to start searching from
         int left = 0;
         // the index to stop searching at
@@ -136,9 +148,6 @@ public class OrderedArrayList<E>
      * @return the position index of the found item in the arrayList, or -1 if no item matches the search item.
      */
     public int indexOfByRecursiveBinarySearch(E searchItem) {
-        // TODO implement a recursive binary search on the sorted section of the arrayList, 0 <= index < nSorted
-        //   to find the position of an item that matches searchItem (this.ordening comparator yields a 0 result)
-
         int recursiveIndex = recursiveIndexOf(searchItem, 0, nSorted - 1);
         if (recursiveIndex != -1) return recursiveIndex;
 
@@ -210,7 +219,7 @@ public class OrderedArrayList<E>
     @Override
     public boolean merge(E newItem, BinaryOperator<E> merger) {
         if (newItem == null) return false;
-        int matchedItemIndex = this.indexOfByRecursiveBinarySearch(newItem);
+        int matchedItemIndex = this.indexOfByBinarySearch(newItem);
 
         if (matchedItemIndex < 0) {
             this.add(newItem);
@@ -219,8 +228,7 @@ public class OrderedArrayList<E>
             E found = get(matchedItemIndex);
             E apply = merger.apply(found, newItem);
 
-            this.remove(matchedItemIndex);
-            this.add(matchedItemIndex, apply);
+            set(matchedItemIndex, apply);
             return false;
         }
     }
