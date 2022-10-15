@@ -12,8 +12,8 @@ public class TrafficTracker {
     private final String TRAFFIC_FILE_EXTENSION = ".txt";
     private final String TRAFFIC_FILE_PATTERN = ".+\\" + TRAFFIC_FILE_EXTENSION;
 
-    private OrderedList<Car> cars;                  // the reference list of all known Cars registered by the RDW
-    private OrderedList<Violation> violations;      // the accumulation of all offences by car and by city
+    private final OrderedList<Car> cars;                  // the reference list of all known Cars registered by the RDW
+    private final OrderedList<Violation> violations;      // the accumulation of all offences by car and by city
 
     public TrafficTracker() {
         this.cars = new OrderedArrayList<>(Comparator.comparing(Car::getLicensePlate));
@@ -181,7 +181,7 @@ public class TrafficTracker {
      * @return a list of topNum items that provides the top aggregated violations
      */
     public List<Violation> topViolationsByCar(int topNumber) {
-        return topViolationsByComparing(topNumber, Comparator.comparing(Violation::getCar), this::mergeViolationsByCar, Comparator.comparingInt(Violation::getOffencesCount).reversed());
+        return topViolationsByComparing(topNumber, Comparator.comparing(Violation::getCar), this::mergeViolationsByCar);
     }
 
     /**
@@ -192,26 +192,25 @@ public class TrafficTracker {
      * @return a list of topNum items that provides the top aggregated violations
      */
     public List<Violation> topViolationsByCity(int topNumber) {
-        return topViolationsByComparing(topNumber, Comparator.comparing(Violation::getCity), this::mergeViolationsByCity, Comparator.comparingInt(Violation::getOffencesCount).reversed());
+        return topViolationsByComparing(topNumber, Comparator.comparing(Violation::getCity), this::mergeViolationsByCity);
     }
 
     /**
      * Prepares a list of topNumber of violations based on two sorting logics and a merger.
      *
-     * @param topNumber  the requested top number of violations in the result list
-     * @param firstSort  the first sorting logic
-     * @param merger     the merger
-     * @param secondSort the second sorting logic
+     * @param topNumber the requested top number of violations in the result list
+     * @param firstSort the first sorting logic
+     * @param merger    the merger
      * @return a list of topNum items that provides the top aggregated violations
      */
-    private List<Violation> topViolationsByComparing(int topNumber, Comparator<Violation> firstSort, BinaryOperator<Violation> merger, Comparator<Violation> secondSort) {
+    private List<Violation> topViolationsByComparing(int topNumber, Comparator<Violation> firstSort, BinaryOperator<Violation> merger) {
         OrderedArrayList<Violation> newViolations = new OrderedArrayList<>(firstSort);
 
         for (Violation violation : this.violations) {
             newViolations.merge(violation, merger);
         }
 
-        newViolations.sort(secondSort);
+        newViolations.sort(Comparator.comparingInt(Violation::getOffencesCount).reversed());
         return newViolations.subList(0, topNumber);
     }
 

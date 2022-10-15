@@ -4,27 +4,11 @@ import java.time.LocalDate;
 
 public class Car implements Comparable<Car> {
 
-    public enum CarType {
-        Unknown,
-        Car,
-        Van,
-        Truck,
-        Coach
-    }
-    public enum FuelType {
-        Unknown,
-        Gasoline,
-        Lpg,
-        Diesel,
-        Electric
-    }
-
     private final String licensePlate;      // defines the car uniquely
     private int emissionCategory;           // a number between 0 and 9, higher is cleaner, depends on type, fuel and age, typically.
     private CarType carType;
     private FuelType fuelType;
     private LocalDate dateOfAdmission;      // date of registration of the car at RDW
-
     public Car(String licensePlate) {
         // base constructor for unregistered and foreign cars
         this(licensePlate, 0, CarType.Unknown, FuelType.Unknown, LocalDate.EPOCH);
@@ -41,9 +25,10 @@ public class Car implements Comparable<Car> {
      * parses car information from a textLine
      * with format: licensePlate, emissionCategory, carType, fuelType, dateOfAdmission
      * should ignore leading and trailing whitespaces in each field
+     *
      * @param textLine
-     * @return  a new Car instance with the provided information
-     *          or null if the textLine is corrupt, incomplete or empty
+     * @return a new Car instance with the provided information
+     * or null if the textLine is corrupt, incomplete or empty
      */
     public static Car fromLine(String textLine) {
         Car newCar = null;
@@ -98,12 +83,12 @@ public class Car implements Comparable<Car> {
         this.fuelType = fuelType;
     }
 
-    public void setDateOfAdmission(LocalDate dateOfAdmission) {
-        this.dateOfAdmission = dateOfAdmission;
-    }
-
     public LocalDate getDateOfAdmission() {
         return dateOfAdmission;
+    }
+
+    public void setDateOfAdmission(LocalDate dateOfAdmission) {
+        this.dateOfAdmission = dateOfAdmission;
     }
 
     @Override
@@ -130,5 +115,21 @@ public class Car implements Comparable<Car> {
     @Override
     public int hashCode() {
         return licensePlate.hashCode();
+    }
+
+    public enum CarType {
+        Unknown,
+        Car,
+        Van,
+        Truck,
+        Coach
+    }
+
+    public enum FuelType {
+        Unknown,
+        Gasoline,
+        Lpg,
+        Diesel,
+        Electric
     }
 }

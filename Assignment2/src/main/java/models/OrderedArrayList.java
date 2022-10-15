@@ -46,7 +46,7 @@ public class OrderedArrayList<E>
     @Override
     public void add(int index, E element) {
         if (index < nSorted) {
-            nSorted = index-1;
+            nSorted = index - 1;
         }
         super.add(index, element);
     }

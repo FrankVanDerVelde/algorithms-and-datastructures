@@ -15,12 +15,12 @@ public class TrafficControlMain {
         // import all known cars from the data vault
         trafficTracker.importCarsFromVault(VAULT_NAME + "/cars.txt");
         System.out.println("Imported cars:\n" +
-                trafficTracker.getCars().subList(0,Integer.min(10,trafficTracker.getCars().size())) + "...\n");
+                trafficTracker.getCars().subList(0, Integer.min(10, trafficTracker.getCars().size())) + "...\n");
 
         // import and process all detections at the city entry points of environmental zones from the data vault
         trafficTracker.importDetectionsFromVault(VAULT_NAME + "/detections");
         System.out.println("Aggregated offending detections:\n" +
-                trafficTracker.getViolations().subList(0,Integer.min(10,trafficTracker.getViolations().size())) + "... \n");
+                trafficTracker.getViolations().subList(0, Integer.min(10, trafficTracker.getViolations().size())) + "... \n");
 
         // calculate potential revenues from multiple fine schemes for violations
         System.out.printf("Total fines à €25 per offence for trucks and €35 per offence for coaches would amount to: €%.0f\n",

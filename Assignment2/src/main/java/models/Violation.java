@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Comparator;
-
 public class Violation {
     private final Car car;
     private final String city;
@@ -27,7 +25,7 @@ public class Violation {
             return v1.getCity().compareTo(v2.getCity());
         }
 
-       return carComparison;   // replace by a proper outcome
+        return carComparison;   // replace by a proper outcome
     }
 
     /**
@@ -35,8 +33,9 @@ public class Violation {
      * nullifying identifying attributes car and/or city that do not match
      * identifying attributes that match are retained in the result.
      * This method can be used for aggregating violations applying different grouping criteria
+     *
      * @param other
-     * @return  a new violation with the accumulated offencesCount and matching identifying attributes.
+     * @return a new violation with the accumulated offencesCount and matching identifying attributes.
      */
     public Violation combineOffencesCounts(Violation other) {
         Violation combinedViolation = new Violation(
@@ -70,7 +69,7 @@ public class Violation {
     public double calculateRevenue() {
         if (car.getCarType() == Car.CarType.Truck) {
             return offencesCount * 25;
-        } else if (car.getCarType() == Car.CarType.Coach){
+        } else if (car.getCarType() == Car.CarType.Coach) {
             return offencesCount * 35;
         }
         return 0;
