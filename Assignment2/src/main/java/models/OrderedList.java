@@ -7,8 +7,12 @@ import java.util.function.Function;
 
 public interface OrderedList<E> extends List<E> {
     Comparator<? super E> getOrdening();
+
     void sort();
+
     int indexOfByBinarySearch(E searchItem);
+
     boolean merge(E item, BinaryOperator<E> merger);
-    double aggregate(Function<E,Double> mapper);
+
+    double aggregate(Function<E, Double> mapper);
 }

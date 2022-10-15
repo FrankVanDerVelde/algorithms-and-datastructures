@@ -219,7 +219,7 @@ public class OrderedArrayList<E>
     @Override
     public boolean merge(E newItem, BinaryOperator<E> merger) {
         if (newItem == null) return false;
-        int matchedItemIndex = this.indexOfByBinarySearch(newItem);
+        int matchedItemIndex = this.indexOf(newItem);
 
         if (matchedItemIndex < 0) {
             this.add(newItem);

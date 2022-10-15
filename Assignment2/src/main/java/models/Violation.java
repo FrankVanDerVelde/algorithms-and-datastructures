@@ -13,6 +13,12 @@ public class Violation {
         this.offencesCount = 1;
     }
 
+    public Violation(Car car, String city, int offencesCount) {
+        this.car = car;
+        this.city = city;
+        this.offencesCount = offencesCount;
+    }
+
     public static int compareByLicensePlateAndCity(Violation v1, Violation v2) {
         if (v1 == null || v2 == null) throw new IllegalArgumentException("Violation cannot be null");
 
@@ -72,7 +78,6 @@ public class Violation {
 
     @Override
     public String toString() {
-
         return "%s/%s/%d".formatted(
                 this.car == null ? "null" : this.car.getLicensePlate(),
                 this.city == null ? "null" : this.city,

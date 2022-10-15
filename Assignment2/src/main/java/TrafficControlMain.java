@@ -1,8 +1,5 @@
-import models.Car;
 import models.TrafficTracker;
-import models.Violation;
 
-import java.util.List;
 import java.util.Locale;
 
 public class TrafficControlMain {

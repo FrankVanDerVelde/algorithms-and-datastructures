@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
 public class TrafficTracker {
@@ -151,9 +152,6 @@ public class TrafficTracker {
 
         int totalNumberOfOffences = 0; // tracks the number of offences that emerges from the data in this file
 
-        // TODO validate all detections against the purple criteria and
-        //  merge any resulting offences into this.violations, accumulating offences per car and per city
-        //  also keep track of the totalNumberOfOffences for reporting
         for (Detection detection : newDetections) {
             Violation violation = detection.validatePurple();
             if (violation != null) {
@@ -183,37 +181,7 @@ public class TrafficTracker {
      * @return a list of topNum items that provides the top aggregated violations
      */
     public List<Violation> topViolationsByCar(int topNumber) {
-        OrderedArrayList<Violation> newViolations = new OrderedArrayList<>(Comparator.comparingInt(Violation::getOffencesCount).reversed());
-
-        System.out.println("\n\nyeehaw:\n\n");
-        for (Violation violation : this.violations) {
-            newViolations.merge(violation, this::mergeViolationsByCar);
-        }
-        newViolations.sort();
-
-        newViolations.forEach(System.out::println);
-
-        System.out.println("\n\nyeehaw:\n\n");
-
-        return newViolations.subList(0, topNumber);
-
-        // TODO merge all violations from this.violations into a new OrderedArrayList
-        //   which orders and aggregates violations by city
-        // TODO sort the new list by decreasing offencesCount.
-        // TODO use .subList to return only the topNumber of violations from the sorted list
-        //  (You may want to prepare/reuse a local private method for all this)
-    }
-
-    private Violation mergeViolationsByCar(Violation violation1, Violation violation2) {
-        if (violation1.getCar() != null && violation1.getCar().equals(violation2.getCar())) {
-            final Violation violation = new Violation(
-                    violation1.getCar(),
-                    null
-            );
-            violation.setOffencesCount(violation1.getOffencesCount() + violation2.getOffencesCount());
-            return violation;
-        }
-        return violation1;
+        return topViolationsByComparing(topNumber, Comparator.comparing(Violation::getCar), this::mergeViolationsByCar, Comparator.comparingInt(Violation::getOffencesCount).reversed());
     }
 
     /**
@@ -224,14 +192,55 @@ public class TrafficTracker {
      * @return a list of topNum items that provides the top aggregated violations
      */
     public List<Violation> topViolationsByCity(int topNumber) {
+        return topViolationsByComparing(topNumber, Comparator.comparing(Violation::getCity), this::mergeViolationsByCity, Comparator.comparingInt(Violation::getOffencesCount).reversed());
+    }
 
-        // TODO merge all violations from this.violations into a new OrderedArrayList
-        //   which orders and aggregates violations by Car
-        // TODO sort the new list by decreasing offencesCount.
-        // TODO use .subList to return only the topNumber of violations from the sorted list
-        //  (You may want to prepare/reuse a local private method for all this)
+    /**
+     * Prepares a list of topNumber of violations based on two sorting logics and a merger.
+     *
+     * @param topNumber  the requested top number of violations in the result list
+     * @param firstSort  the first sorting logic
+     * @param merger     the merger
+     * @param secondSort the second sorting logic
+     * @return a list of topNum items that provides the top aggregated violations
+     */
+    private List<Violation> topViolationsByComparing(int topNumber, Comparator<Violation> firstSort, BinaryOperator<Violation> merger, Comparator<Violation> secondSort) {
+        OrderedArrayList<Violation> newViolations = new OrderedArrayList<>(firstSort);
 
-        return null;  // replace this reference
+        for (Violation violation : this.violations) {
+            newViolations.merge(violation, merger);
+        }
+
+        newViolations.sort(secondSort);
+        return newViolations.subList(0, topNumber);
+    }
+
+    /**
+     * Merges two violations if they apply to the same car.
+     *
+     * @param v1 the first violation
+     * @param v2 the second violation
+     * @return A modified copy of the first violation when not the same car, otherwise a new violation with the combined offences counts.
+     */
+    private Violation mergeViolationsByCar(Violation v1, Violation v2) {
+        boolean sameCar = v1.getCar() != null && v1.getCar().equals(v2.getCar());
+        if (!sameCar) return new Violation(v1.getCar(), null, v1.getOffencesCount());
+
+        return new Violation(v1.getCar(), null, v1.getOffencesCount() + v2.getOffencesCount());
+    }
+
+    /**
+     * Merges two violations if they apply to the same city.
+     *
+     * @param v1 the first violation
+     * @param v2 the second violation
+     * @return A modified copy of the first violation when not from the same city, otherwise a new violation with the combined offences counts.
+     */
+    private Violation mergeViolationsByCity(Violation v1, Violation v2) {
+        boolean sameCar = v1.getCity() != null && v1.getCity().equals(v2.getCity());
+        if (!sameCar) return new Violation(null, v1.getCity(), v1.getOffencesCount());
+
+        return new Violation(null, v1.getCity(), v1.getOffencesCount() + v2.getOffencesCount());
     }
 
     public OrderedList<Car> getCars() {
