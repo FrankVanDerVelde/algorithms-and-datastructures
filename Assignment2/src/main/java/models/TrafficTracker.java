@@ -52,8 +52,8 @@ public class TrafficTracker {
     /**
      * helper method to create a scanner on a file and handle the exception
      *
-     * @param file
-     * @return
+     * @param file the file to be scanned
+     * @return a scanner on the file
      */
     private static Scanner createFileScanner(File file) {
         try {
@@ -74,7 +74,7 @@ public class TrafficTracker {
     /**
      * imports all registered cars from a resource file that has been provided by the RDW
      *
-     * @param resourceName
+     * @param resourceName the name of the resource file
      */
     public void importCarsFromVault(String resourceName) {
         this.cars.clear();
@@ -94,7 +94,7 @@ public class TrafficTracker {
      * imports and merges all raw detection data of all entry gates of all cities from the hierarchical file structure of the vault
      * accumulates any offences against purple rules into this.violations
      *
-     * @param resourceName
+     * @param resourceName the name of the resource folder
      */
     public void importDetectionsFromVault(String resourceName) {
         this.violations.clear();
@@ -119,8 +119,6 @@ public class TrafficTracker {
             // the file is a folder (a.k.a. directory)
             //  retrieve a list of all files and sub folders in this directory
             File[] filesInDirectory = Objects.requireNonNullElse(file.listFiles(), new File[0]);
-            // TODO recursively process all files and sub folders from the filesInDirectory list.
-            //  also track the total number of offences found
             for (File nestedFile : filesInDirectory) {
                 totalNumberOfOffences += mergeDetectionsFromVaultRecursively(nestedFile);
             }
@@ -140,13 +138,13 @@ public class TrafficTracker {
      * @param file
      */
     private int mergeDetectionsFromFile(File file) {
-
         // re-sort the accumulated violations for efficient searching and merging
         this.violations.sort();
 
         // use a regular ArrayList to load the raw detection info from the file
         List<Detection> newDetections = new ArrayList<>();
-        importItemsFromFile(newDetections, file, line -> Detection.fromLine(line, this.cars));
+
+    importItemsFromFile(newDetections, file, line -> Detection.fromLine(line, this.cars));
 
         System.out.printf("Imported %d detections from %s.\n", newDetections.size(), file.getPath());
 

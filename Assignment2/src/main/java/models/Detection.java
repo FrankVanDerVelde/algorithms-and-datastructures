@@ -37,24 +37,34 @@ public class Detection {
      */
     public static Detection fromLine(String textLine, List<Car> cars) {
         if (textLine == null) return null;
-        textLine = textLine.replaceAll(" ", "");
 
+        // split up into comma-separated fields
         String[] split = textLine.split(",");
         if (split.length != 3) return null;
 
-        Car car = new Car(split[0]);
+        // creating a new Car instance for license plate comparison
+        Car car = new Car(split[0].trim());
         int index = cars.indexOf(car);
 
+        // if the car is not known, add it to the list
+        // otherwise, use the known car instead.
         if (index != -1) car = cars.get(index);
         else {
             cars.add(car);
         }
 
-        return new Detection(
-                car,
-                split[1],
-                LocalDateTime.parse(split[2])
-        );
+        // return the detection.
+        try {
+            return new Detection(
+                    car,
+                    split[1].trim(),
+                    LocalDateTime.parse(split[2].trim())
+            );
+        } catch (Exception e) {
+            // returning null if any of the parsing methods fail
+            // for example the LocalDateTime.parse method could throw an exception on a format mismatch
+            return null;
+        }
     }
 
     /**
@@ -66,7 +76,6 @@ public class Detection {
      * null if no offence was found.
      */
     public Violation validatePurple() {
-        // TODO validate that diesel trucks and diesel coaches have an emission category of 6 or above
         if (car.getFuelType() == FuelType.Diesel &&
                 (car.getCarType() == CarType.Truck || car.getCarType() == CarType.Coach)) {
             if (car.getEmissionCategory() < 6) {

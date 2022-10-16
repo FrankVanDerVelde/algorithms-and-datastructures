@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Comparator;
+
 public class Violation {
     private final Car car;
     private final String city;
@@ -20,12 +22,9 @@ public class Violation {
     public static int compareByLicensePlateAndCity(Violation v1, Violation v2) {
         if (v1 == null || v2 == null) throw new IllegalArgumentException("Violation cannot be null");
 
-        int carComparison = v1.getCar().getLicensePlate().compareTo(v2.getCar().getLicensePlate());
-        if (carComparison == 0) {
-            return v1.getCity().compareTo(v2.getCity());
-        }
-
-        return carComparison;   // replace by a proper outcome
+        return Comparator.comparing(Violation::getCar)
+                .thenComparing(Violation::getCity)
+                .compare(v1, v2);
     }
 
     /**

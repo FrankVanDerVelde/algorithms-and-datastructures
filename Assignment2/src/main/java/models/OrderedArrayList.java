@@ -104,6 +104,7 @@ public class OrderedArrayList<E>
      * @return the position index of the found item in the arrayList, or -1 if no item matches the search item.
      */
     public int indexOfByIterativeBinarySearch(E searchItem) {
+        if (searchItem == null) return -1;
         // the index to start searching from
         int left = 0;
         // the index to stop searching at
