@@ -144,13 +144,14 @@ public class TrafficTracker {
         // use a regular ArrayList to load the raw detection info from the file
         List<Detection> newDetections = new ArrayList<>();
 
-    importItemsFromFile(newDetections, file, line -> Detection.fromLine(line, this.cars));
+        importItemsFromFile(newDetections, file, line -> Detection.fromLine(line, this.cars));
 
         System.out.printf("Imported %d detections from %s.\n", newDetections.size(), file.getPath());
 
         int totalNumberOfOffences = 0; // tracks the number of offences that emerges from the data in this file
 
         for (Detection detection : newDetections) {
+            if (detection == null) continue;
             Violation violation = detection.validatePurple();
             if (violation != null) {
                 this.violations.merge(violation, Violation::combineOffencesCounts);
@@ -209,7 +210,7 @@ public class TrafficTracker {
         }
 
         newViolations.sort(Comparator.comparingInt(Violation::getOffencesCount).reversed());
-        return newViolations.subList(0, topNumber);
+        return newViolations.subList(0, Math.min(newViolations.size(), topNumber));
     }
 
     /**

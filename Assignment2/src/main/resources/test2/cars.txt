@@ -1,0 +1,4 @@
+AAA-BB-1, 5, Car, Gasoline, 2022-02-28
+BBB-CC-2, 4, Truck, Diesel, 2020-08-29
+LAW-A1-G, 5, Truck, Gasoline, 2017-07-29
+OOP-MA-8, 5, Coach, Diesel, 2019-09-29
