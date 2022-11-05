@@ -17,10 +17,6 @@ public class SorterImpl<E> implements Sorter<E> {
     public List<E> selInsBubSort(List<E> items, Comparator<E> comparator) {
         // TODO implement selection sort or insertion sort or bubble sort
 
-        System.out.println("Testing insertion sort");
-        System.out.println(items);
-        System.out.println("--------------------------");
-
         int n = items.size();
         for (int i = 1; i < n; ++i) {
             E key = items.get(i);
@@ -29,9 +25,7 @@ public class SorterImpl<E> implements Sorter<E> {
             /* Move elements of arr[0..i-1], that are
                greater than key, to one position ahead
                of their current position */
-            System.out.println(items.get(j));
-            System.out.println(key);
-            System.out.println(comparator.compare(items.get(j), key));
+
             while (j >= 0 && comparator.compare(items.get(j), key) > 0) {
                 items.set(j + 1, items.get(j));
                 j = j - 1;
@@ -39,7 +33,6 @@ public class SorterImpl<E> implements Sorter<E> {
             items.set(j + 1, key);
         }
 
-        System.out.println(items);
         return items;   // replace as you find appropriate
     }
 
@@ -55,10 +48,45 @@ public class SorterImpl<E> implements Sorter<E> {
         // TODO provide a recursive quickSort implementation,
         //  that is different from the example given in the lecture
 
-
+        recursiveQuickSort(items, 0, items.size() - 1, comparator);
 
         return items;   // replace as you find appropriate
     }
+
+    public void recursiveQuickSort(List<E> items, int start, int end, Comparator<E> comparator) {
+
+        System.out.println("Quicksort");
+        System.out.println(items);
+        if (start < end) {
+            int partitionIndex = partition(items, start, end, comparator);
+
+            recursiveQuickSort(items, start, partitionIndex - 1, comparator);
+            recursiveQuickSort(items, partitionIndex + 1, end, comparator);
+        }
+    }
+                                          
+
+    int partition(List<E> part, int start, int end, Comparator<E> comparator) {
+        E pivot = part.get(end);
+        int i = start - 1;
+
+        for (int j = start; j < end; j++) {
+            if (comparator.compare(part.get(j), pivot) < 0) {
+                i++;
+
+                E tempSwapElem = part.get(i);
+                part.set(i, part.get(j));
+                part.set(j, tempSwapElem);
+            }
+        }
+
+        E tempSwapElem = part.get(i+1);
+        part.set(i+1, part.get(end));
+        part.set(end, tempSwapElem);
+
+        return i+1;
+    }
+
 
     /**
      * Identifies the lead collection of numTops items according to the ordening criteria of comparator
