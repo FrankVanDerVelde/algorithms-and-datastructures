@@ -89,7 +89,8 @@ public class Song {
     public int compareByHighestStreamsCountTotal(Song other) {
         // TODO compare the total of stream counts of this song across all countries
         //  with the total of the other song
-        return Comparator.comparingInt(Song::getStreamsCountTotal).compare(other, this);
+
+        return Integer.compare(other.getStreamsCountTotal(), this.getStreamsCountTotal());
     }
 
     /**
@@ -101,37 +102,6 @@ public class Song {
     public int compareForDutchNationalChart(Song other) {
         // TODO compare this song with the other song
         //  ordening all Dutch songs upfront and then by decreasing total number of streams
-
-
-//        assertSame(Element.LI, Element.valueOf("LI"));
-
-//        assertSame(this.getLanguage(), Language.valueOf("NL"));
-
-//        Comparator.comparing((Song s) -> !this.getLanguage().equals( Language.valueOf("NL"))).thenComparing(Integer::getStreamsCountTotal)
-
-
-//       Comparator.comparing(Value::getLanguage)
-
-//        return Comparator.comparing(() -> this.)
-
-//        System.out.println("----------------------");
-//        System.out.println("----------------------");
-//        System.out.println("----------------------");
-//        System.out.println(title);
-//        System.out.println(language);
-//        System.out.println(this.getStreamsCountTotal());
-//        System.out.println("----------------------");
-//        System.out.println(other.title);
-//        System.out.println(other.language);
-//        System.out.println(other.getStreamsCountTotal());
-//        System.out.println("----------------------");
-//        System.out.println("----------------------");
-//        System.out.println("----------------------");
-
-// .thenComparing(Song::getStreamsCountTotal).compare(this, other)
-        System.out.println(title);
-        System.out.println(other.title);
-        System.out.println(Comparator.comparing((Song song) -> song.getLanguage() == Language.NL ? 1 : -1).compare(this, other));
 
         return Comparator.comparing((Song song) -> song.getLanguage() == Language.NL ? 1 : -1).thenComparing(Song::getStreamsCountTotal).compare(other, this);
     }

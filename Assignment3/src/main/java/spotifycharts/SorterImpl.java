@@ -17,9 +17,29 @@ public class SorterImpl<E> implements Sorter<E> {
     public List<E> selInsBubSort(List<E> items, Comparator<E> comparator) {
         // TODO implement selection sort or insertion sort or bubble sort
 
+        System.out.println("Testing insertion sort");
+        System.out.println(items);
+        System.out.println("--------------------------");
 
+        int n = items.size();
+        for (int i = 1; i < n; ++i) {
+            E key = items.get(i);
+            int j = i - 1;
 
+            /* Move elements of arr[0..i-1], that are
+               greater than key, to one position ahead
+               of their current position */
+            System.out.println(items.get(j));
+            System.out.println(key);
+            System.out.println(comparator.compare(items.get(j), key));
+            while (j >= 0 && comparator.compare(items.get(j), key) > 0) {
+                items.set(j + 1, items.get(j));
+                j = j - 1;
+            }
+            items.set(j + 1, key);
+        }
 
+        System.out.println(items);
         return items;   // replace as you find appropriate
     }
 
