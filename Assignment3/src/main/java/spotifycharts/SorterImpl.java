@@ -15,8 +15,6 @@ public class SorterImpl<E> implements Sorter<E> {
      * @return the items sorted in place
      */
     public List<E> selInsBubSort(List<E> items, Comparator<E> comparator) {
-        // TODO implement selection sort or insertion sort or bubble sort
-
         int n = items.size();
         for (int i = 1; i < n; ++i) {
             E key = items.get(i);
@@ -46,9 +44,6 @@ public class SorterImpl<E> implements Sorter<E> {
      * @return the items sorted in place
      */
     public List<E> quickSort(List<E> items, Comparator<E> comparator) {
-        // TODO provide a recursive quickSort implementation,
-        //  that is different from the example given in the lecture
-
         recursiveQuickSort(items, 0, items.size() - 1, comparator);
 
         return items;   // replace as you find appropriate

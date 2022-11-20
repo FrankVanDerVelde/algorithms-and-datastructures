@@ -92,9 +92,6 @@ public class Song {
      * @return negative number, zero or positive number according to Comparator conventions
      */
     public int compareForDutchNationalChart(Song other) {
-        // TODO compare this song with the other song
-        //  ordening all Dutch songs upfront and then by decreasing total number of streams
-
         return Comparator.comparing((Song song) -> song.getLanguage() == Language.NL ? 1 : -1)
                 .thenComparing(Song::getStreamsCountTotal)
                 .compare(other, this);
@@ -118,13 +115,4 @@ public class Song {
         return String.format("%s/%s{%s}(%d)", artist, title, language, getStreamsCountTotal());
     }
 
-//    @Override
-//    public String toString() {
-//        return new StringJoiner("")
-//                .add(artist + "/")
-//                .add(title)
-//                .add("{" + language + "}")
-//                .add("(" + getStreamsCountTotal() + ")")
-//                .toString();
-//    }
 }

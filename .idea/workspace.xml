@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Implemented heap sorting.">
+    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Fixed heap sorting.">
+      <change afterPath="$PROJECT_DIR$/Assignment3/src/test/java/spotifycharts/SongRankingTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment3/src/main/java/spotifycharts/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/src/main/java/spotifycharts/Song.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assignment3/src/main/java/spotifycharts/SorterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/src/main/java/spotifycharts/SorterImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment3/target/classes/spotifycharts/Song.class" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/target/classes/spotifycharts/Song.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment3/target/classes/spotifycharts/SorterImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/target/classes/spotifycharts/SorterImpl.class" afterDir="false" />
     </list>
+    <list id="72b7cbec-4633-4184-9a1e-16119e91f806" name="Changes by Frank" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +20,13 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,25 +49,66 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Lukas/ADS/Assignment3&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "jdk.selected.JAVA_MODULE": "17",
+    "last_opened_file_path": "D:/Lukas/ADS/Assignment3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="JUnit.SongSorterTest">
-    <configuration name="SpotifyChartsMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="SpotifyChartsMain" />
+}]]></component>
+  <component name="RunManager" selected="JUnit.SongRankingTest.testStreamCountsSorting">
+    <configuration name="SongRankingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="spotify-charts" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="spotifycharts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="spotifycharts" />
+      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongRankingTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SongRankingTest.testDutchSongComparing" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spotify-charts" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="spotifycharts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="spotifycharts" />
+      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongRankingTest" />
+      <option name="METHOD_NAME" value="testDutchSongComparing" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SongRankingTest.testStreamCountsSorting" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spotify-charts" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="spotifycharts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="spotifycharts" />
+      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongRankingTest" />
+      <option name="METHOD_NAME" value="testStreamCountsSorting" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -71,22 +124,6 @@
       <option name="PACKAGE_NAME" value="spotifycharts" />
       <option name="MAIN_CLASS_NAME" value="spotifycharts.SongSorterTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SongSorterTest.topsHeapSortAndCollectionSortYieldSameOrder" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="spotify-charts" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="spotifycharts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="spotifycharts" />
-      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongSorterTest" />
-      <option name="METHOD_NAME" value="topsHeapSortAndCollectionSortYieldSameOrder" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -108,10 +145,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.SongSorterTest" />
-        <item itemvalue="JUnit.SongSorterTest.topsHeapSortAndCollectionSortYieldSameOrder" />
-        <item itemvalue="Application.SpotifyChartsMain" />
+        <item itemvalue="JUnit.SongRankingTest.testStreamCountsSorting" />
         <item itemvalue="JUnit.SongTest" />
+        <item itemvalue="JUnit.SongSorterTest" />
+        <item itemvalue="JUnit.SongRankingTest.testDutchSongComparing" />
+        <item itemvalue="JUnit.SongRankingTest" />
       </list>
     </recent_temporary>
   </component>
@@ -131,7 +169,7 @@
       <workItem from="1668171089808" duration="7321000" />
       <workItem from="1668345204626" duration="4419000" />
       <workItem from="1668903798075" duration="40000" />
-      <workItem from="1668946004429" duration="543000" />
+      <workItem from="1668946004429" duration="2506000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed song">
       <created>1667517972074</created>
@@ -154,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668903832475</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fixed heap sorting.">
+      <created>1668946741251</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668946741251</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +220,7 @@
     <MESSAGE value="Fixed song" />
     <MESSAGE value="Added gitignore file." />
     <MESSAGE value="Implemented heap sorting." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented heap sorting." />
+    <MESSAGE value="Fixed heap sorting." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed heap sorting." />
   </component>
 </project>
