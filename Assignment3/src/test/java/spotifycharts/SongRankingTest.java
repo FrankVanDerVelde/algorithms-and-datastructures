@@ -43,8 +43,8 @@ public class SongRankingTest {
 
         final int comparison = spanish.compareForDutchNationalChart(dutch);
 
-        System.out.println(comparison);
-        Assertions.assertTrue(comparison > 0, "Dutch song should be ranked higher than Spanish song despite having less streams because it is meant for the Dutch chart");
+        Assertions.assertTrue(comparison > 0, "Dutch song should be ranked higher than Spanish song " +
+                "despite having less streams because it is meant for the Dutch chart");
 
         final List<Song> songs = new java.util.ArrayList<>(List.of(spanish, english, dutch));
         Collections.shuffle(songs);
@@ -52,7 +52,8 @@ public class SongRankingTest {
         SongSorter sorter = new SongSorter();
         final List<Song> sortedSongs = sorter.quickSort(songs, Song::compareForDutchNationalChart);
 
-        Assertions.assertSame(sortedSongs.get(0), dutch, "Dutch song should be the highest ranked song because it's for dutch charts.");
+        Assertions.assertSame(sortedSongs.get(0), dutch, "Dutch song should be the highest ranked " +
+                "song because it's for dutch charts.");
         Assertions.assertSame(sortedSongs.get(1), english, "English song should be second.");
         Assertions.assertSame(sortedSongs.get(2), spanish, "Spanish song should be third.");
     }

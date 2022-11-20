@@ -58,7 +58,6 @@ public class SorterImpl<E> implements Sorter<E> {
         }
     }
 
-
     int partition(List<E> part, int start, int end, Comparator<E> comparator) {
         E pivot = part.get(end);
         int i = start - 1;
@@ -168,7 +167,6 @@ public class SorterImpl<E> implements Sorter<E> {
             childi = parenti;
             parenti = (childi) / 2;
         }
-//        items.set(childi, swimmer);
     }
 
     /**
@@ -185,7 +183,6 @@ public class SorterImpl<E> implements Sorter<E> {
     protected void heapSink(List<E> items, int heapSize, Comparator<E> comparator) {
         int parenti = 0;
         int childi = 1;
-        E sinker = items.get(parenti);
 
         // sink the top item to its designated position, starting from index 0 using heap condition
 
@@ -196,7 +193,7 @@ public class SorterImpl<E> implements Sorter<E> {
             }
 
             // checking if the parent is bigger than the child, if so, swap them.
-            if (comparator.compare(sinker, items.get(childi)) > 0) {
+            if (comparator.compare(items.get(parenti), items.get(childi)) > 0) {
                 swap(items, parenti, childi);
             } else {
                 // if the parent is smaller than the child, we are done.
