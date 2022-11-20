@@ -168,7 +168,7 @@ public class SorterImpl<E> implements Sorter<E> {
             childi = parenti;
             parenti = (childi) / 2;
         }
-        items.set(childi, swimmer);
+//        items.set(childi, swimmer);
     }
 
     /**
@@ -206,8 +206,5 @@ public class SorterImpl<E> implements Sorter<E> {
             parenti = childi;
             childi = 2 * parenti;
         }
-
-        items.set(parenti, sinker);
-
     }
 }

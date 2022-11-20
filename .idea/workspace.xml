@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Started on efficiency.">
-      <change afterPath="$PROJECT_DIR$/Assignment3/src/test/java/spotifycharts/SongSortingEfficiencyMeasuring.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assignment3/src/test/java/spotifycharts/EfficiencyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/src/test/java/spotifycharts/EfficiencyTest.java" afterDir="false" />
+    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Added sorting efficiency measurement test.">
+      <change beforePath="$PROJECT_DIR$/Assignment3/src/main/java/spotifycharts/SorterImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/src/main/java/spotifycharts/SorterImpl.java" afterDir="false" />
     </list>
     <list id="72b7cbec-4633-4184-9a1e-16119e91f806" name="Changes by Frank" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,31 +61,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.SongSortingEfficiencyMeasuring (2)">
-    <configuration name="EfficiencyTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="spotifycharts.EfficiencyTest" />
-      <module name="spotify-charts" />
-      <option name="PROGRAM_PARAMETERS" value="-Xint" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="spotifycharts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.SpotifyChartsMain">
     <configuration name="SongSortingEfficiencyMeasuring (2)" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="spotifycharts.SongSortingEfficiencyMeasuring" />
       <module name="spotify-charts" />
@@ -125,38 +99,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EfficiencyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SpotifyChartsMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SpotifyChartsMain" />
       <module name="spotify-charts" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="spotifycharts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="spotifycharts" />
-      <option name="MAIN_CLASS_NAME" value="spotifycharts.EfficiencyTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="EfficiencyTest.setUp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="spotify-charts" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="spotifycharts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="spotifycharts" />
-      <option name="MAIN_CLASS_NAME" value="spotifycharts.EfficiencyTest" />
-      <option name="METHOD_NAME" value="setUp" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SongRankingTest.testStreamCountsSorting" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SongRankingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="spotify-charts" />
       <extension name="coverage">
         <pattern>
@@ -166,18 +116,48 @@
       </extension>
       <option name="PACKAGE_NAME" value="spotifycharts" />
       <option name="MAIN_CLASS_NAME" value="spotifycharts.SongRankingTest" />
-      <option name="METHOD_NAME" value="testStreamCountsSorting" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SongSorterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spotify-charts" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="spotifycharts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="spotifycharts" />
+      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongSorterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SongTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="spotify-charts" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="spotifycharts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="spotifycharts" />
+      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SpotifyChartsMain" />
+        <item itemvalue="JUnit.SongRankingTest" />
+        <item itemvalue="JUnit.SongTest" />
+        <item itemvalue="JUnit.SongSorterTest" />
         <item itemvalue="Application.SongSortingEfficiencyMeasuring" />
-        <item itemvalue="JUnit.EfficiencyTest" />
-        <item itemvalue="JUnit.EfficiencyTest.setUp" />
-        <item itemvalue="Application.EfficiencyTest" />
       </list>
     </recent_temporary>
   </component>
@@ -199,7 +179,7 @@
       <workItem from="1668903798075" duration="40000" />
       <workItem from="1668946004429" duration="4551000" />
       <workItem from="1668952905082" duration="10049000" />
-      <workItem from="1668963330021" duration="333000" />
+      <workItem from="1668963330021" duration="4336000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed song">
       <created>1667517972074</created>
@@ -243,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668950539874</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added sorting efficiency measurement test.">
+      <created>1668968574642</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1668968574642</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,6 +254,7 @@
     <MESSAGE value="Fixed heap sorting." />
     <MESSAGE value="Added tests." />
     <MESSAGE value="Started on efficiency." />
-    <option name="LAST_COMMIT_MESSAGE" value="Started on efficiency." />
+    <MESSAGE value="Added sorting efficiency measurement test." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added sorting efficiency measurement test." />
   </component>
 </project>
