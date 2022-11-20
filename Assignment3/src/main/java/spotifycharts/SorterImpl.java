@@ -1,7 +1,6 @@
 package spotifycharts;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 public class SorterImpl<E> implements Sorter<E> {
@@ -10,9 +9,10 @@ public class SorterImpl<E> implements Sorter<E> {
      * Sorts all items by selection or insertion sort using the provided comparator
      * for deciding relative ordening of two items
      * Items are sorted 'in place' without use of an auxiliary list or array
+     *
      * @param items
      * @param comparator
-     * @return  the items sorted in place
+     * @return the items sorted in place
      */
     public List<E> selInsBubSort(List<E> items, Comparator<E> comparator) {
         // TODO implement selection sort or insertion sort or bubble sort
@@ -20,17 +20,17 @@ public class SorterImpl<E> implements Sorter<E> {
         int n = items.size();
         for (int i = 1; i < n; ++i) {
             E key = items.get(i);
-            int j = i - 1;
+            int prevIndex = i - 1;
 
             /* Move elements of arr[0..i-1], that are
                greater than key, to one position ahead
                of their current position */
 
-            while (j >= 0 && comparator.compare(items.get(j), key) > 0) {
-                items.set(j + 1, items.get(j));
-                j = j - 1;
+            while (prevIndex >= 0 && comparator.compare(items.get(prevIndex), key) > 0) {
+                items.set(prevIndex + 1, items.get(prevIndex));
+                prevIndex = prevIndex - 1;
             }
-            items.set(j + 1, key);
+            items.set(prevIndex + 1, key);
         }
 
         return items;   // replace as you find appropriate
@@ -40,9 +40,10 @@ public class SorterImpl<E> implements Sorter<E> {
      * Sorts all items by quick sort using the provided comparator
      * for deciding relative ordening of two items
      * Items are sorted 'in place' without use of an auxiliary list or array
+     *
      * @param items
      * @param comparator
-     * @return  the items sorted in place
+     * @return the items sorted in place
      */
     public List<E> quickSort(List<E> items, Comparator<E> comparator) {
         // TODO provide a recursive quickSort implementation,
@@ -54,9 +55,6 @@ public class SorterImpl<E> implements Sorter<E> {
     }
 
     public void recursiveQuickSort(List<E> items, int start, int end, Comparator<E> comparator) {
-
-        System.out.println("Quicksort");
-        System.out.println(items);
         if (start < end) {
             int partitionIndex = partition(items, start, end, comparator);
 
@@ -64,7 +62,7 @@ public class SorterImpl<E> implements Sorter<E> {
             recursiveQuickSort(items, partitionIndex + 1, end, comparator);
         }
     }
-                                          
+
 
     int partition(List<E> part, int start, int end, Comparator<E> comparator) {
         E pivot = part.get(end);
@@ -80,11 +78,11 @@ public class SorterImpl<E> implements Sorter<E> {
             }
         }
 
-        E tempSwapElem = part.get(i+1);
-        part.set(i+1, part.get(end));
+        E tempSwapElem = part.get(i + 1);
+        part.set(i + 1, part.get(end));
         part.set(end, tempSwapElem);
 
-        return i+1;
+        return i + 1;
     }
 
 
@@ -94,11 +92,12 @@ public class SorterImpl<E> implements Sorter<E> {
      * with use of (zero-based) heapSwim and heapSink operations.
      * The remaining items are kept in the tail of the list, in arbitrary order.
      * Items are sorted 'in place' without use of an auxiliary list or array or other positions in items
-     * @param numTops       the size of the lead collection of items to be found and sorted
+     *
+     * @param numTops    the size of the lead collection of items to be found and sorted
      * @param items
      * @param comparator
-     * @return              the items list with its first numTops items sorted according to comparator
-     *                      all other items >= any item in the lead collection
+     * @return the items list with its first numTops items sorted according to comparator
+     * all other items >= any item in the lead collection
      */
     public List<E> topsHeapSort(int numTops, List<E> items, Comparator<E> comparator) {
 
@@ -134,58 +133,92 @@ public class SorterImpl<E> implements Sorter<E> {
         // the first numTops positions of the list now contain the lead collection
         // the reverseComparator heap condition applies to this lead collection
         // now use heapSort to realise full ordening of this collection
-        for (int i = numTops-1; i > 0; i--) {
+        System.out.println();
+        System.out.println(items.stream().map(s -> s instanceof Song song ? song.getTitle() : s.toString()).limit(5).toList());
+        for (int i = numTops - 1; i > 0; i--) {
             // loop-invariant: items[i+1..numTops-1] contains the tail part of the sorted lead collection
             // position 0 holds the root item of a heap of size i+1 organised by reverseComparator
             // this root item is the worst item of the remaining front part of the lead collection
 
+            System.out.println(i);
+
             // TODO swap item[0] and item[i];
             //  this moves item[0] to its designated position
-
-
+            swap(items, 0, i);
+            E temp = items.get(0);
+            System.out.println("Moving: " + temp);
 
             // TODO the new root may have violated the heap condition
             //  repair the heap condition on the remaining heap of size i
-
-
-
+            heapSink(items, numTops, comparator);
+            System.out.println("Moved to: " + items.indexOf(temp));
         }
 
         return items;
+    }
+
+    private void swap(List<E> items, int i, int j) {
+        E temp = items.get(i);
+        items.set(i, items.get(j));
+        items.set(j, temp);
     }
 
     /**
      * Repairs the zero-based heap condition for items[heapSize-1] on the basis of the comparator
      * all items[0..heapSize-2] are assumed to satisfy the heap condition
      * The zero-bases heap condition says:
-     *                      all items[i] <= items[2*i+1] and items[i] <= items[2*i+2], if any
+     * all items[i] <= items[2*i+1] and items[i] <= items[2*i+2], if any
      * or equivalently:     all items[i] >= items[(i-1)/2]
+     *
      * @param items
      * @param heapSize
      * @param comparator
      */
     protected void heapSwim(List<E> items, int heapSize, Comparator<E> comparator) {
-        // TODO swim items[heapSize-1] up the heap until
-        //      i==0 || items[(i-1]/2] <= items[i]
+        int childi = heapSize - 1;
+        int parenti = childi / 2;
 
+        while (parenti >= 0 && comparator.compare(items.get(childi), items.get(parenti)) < 0) {
+            swap(items, childi, parenti);
 
-
+            childi = parenti;
+            parenti = (childi - 1) / 2;
+        }
     }
+
     /**
      * Repairs the zero-based heap condition for its root items[0] on the basis of the comparator
      * all items[1..heapSize-1] are assumed to satisfy the heap condition
      * The zero-bases heap condition says:
-     *                      all items[i] <= items[2*i+1] and items[i] <= items[2*i+2], if any
+     * all items[i] <= items[2*i+1] and items[i] <= items[2*i+2], if any
      * or equivalently:     all items[i] >= items[(i-1)/2]
+     *
      * @param items
      * @param heapSize
      * @param comparator
      */
     protected void heapSink(List<E> items, int heapSize, Comparator<E> comparator) {
-        // TODO sink items[0] down the heap until
-        //      2*i+1>=heapSize || (items[i] <= items[2*i+1] && items[i] <= items[2*i+2])
+        int parenti = 0;
+        int childi = 1;
 
+        // sink the top item to its designated position, starting from index 0 using heap condition
 
+        while (childi < heapSize) {
+            // checking if there is another child to this parent, if so, determine which one is bigger.
+            if (childi + 1 < heapSize && comparator.compare(items.get(childi), items.get(childi + 1)) > 0) {
+                childi++;
+            }
+            // checking if the parent is bigger than the child, if so, swap them.
+            if (comparator.compare(items.get(parenti), items.get(childi)) > 0) {
+                swap(items, parenti, childi);
+            } else {
+                // if the parent is smaller than the child, we are done.
+                break;
+            }
+            // update the parent and child index.
+            parenti = childi;
+            childi = 2 * parenti + 1;
+        }
 
     }
 }

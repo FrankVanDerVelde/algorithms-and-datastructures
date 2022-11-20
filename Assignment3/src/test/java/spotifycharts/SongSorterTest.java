@@ -35,7 +35,7 @@ class SongSorterTest {
         customSortAndCollectionSortResultInSameOrder(songSorter::quickSort);
     }
 
-    private void customSortAndCollectionSortResultInSameOrder(BiFunction<List<Song>,Comparator,List<Song>> sorterMethod) {
+    private void customSortAndCollectionSortResultInSameOrder(BiFunction<List<Song>, Comparator, List<Song>> sorterMethod) {
         List<Song> fewSortedSongs = new ArrayList<>(fewSongs);
         Collections.shuffle(fewSortedSongs);
         List<Song> manySortedSongs = new ArrayList<>(manySongs);
@@ -72,15 +72,15 @@ class SongSorterTest {
 
         songSorter.topsHeapSort(5, fewSortedSongs, Comparator.comparing(Song::getTitle));
         fewSongs.sort(Comparator.comparing(Song::getTitle));
-        assertEquals(fewSongs.subList(0,5).stream().map(Song::getTitle).collect(Collectors.toList()),
-                fewSortedSongs.subList(0,5).stream().map(Song::getTitle).collect(Collectors.toList()));
+        assertEquals(fewSongs.subList(0, 5).stream().map(Song::getTitle).collect(Collectors.toList()),
+                fewSortedSongs.subList(0, 5).stream().map(Song::getTitle).collect(Collectors.toList()));
 
         songSorter.topsHeapSort(1, manySortedSongs, rankingScheme);
         manySongs.sort(rankingScheme);
         assertEquals(manySongs.get(0), manySortedSongs.get(0));
 
         songSorter.topsHeapSort(25, manySortedSongs, rankingScheme);
-        assertEquals(manySongs.subList(0,25), manySortedSongs.subList(0,25));
+        assertEquals(manySongs.subList(0, 25), manySortedSongs.subList(0, 25));
     }
 
     public static <E> String findFirstDifference(List<E> expected, List<E> actual, Comparator<E> ranker, int displayLength) {
@@ -89,9 +89,9 @@ class SongSorterTest {
         }
         for (int i = 0; i < expected.size(); i++) {
             if (ranker.compare(actual.get(i), expected.get(i)) != 0) {
-                int subListEnd = Integer.min(i+displayLength, expected.size());
-                return String.format("Expected items[%d..%d] = %s,\n   got: %s", i, subListEnd-1,
-                        expected.subList(i,subListEnd), actual.subList(i,subListEnd));
+                int subListEnd = Integer.min(i + displayLength, expected.size());
+                return String.format("Expected items[%d..%d] = %s,\n   got: %s", i, subListEnd - 1,
+                        expected.subList(i, subListEnd), actual.subList(i, subListEnd));
             }
         }
         return null;
@@ -99,30 +99,30 @@ class SongSorterTest {
 
     @Test
     void swimShouldBuildAHeapOf6Correctly() {
-        this.heap = new ArrayList<>(this.fewSongs.subList(0,6));
+        this.heap = new ArrayList<>(this.fewSongs.subList(0, 6));
 
         // boundary condition test on heap of size 1
-        this.songSorter.heapSwim(this.heap,1,this.heapComparator);
+        this.songSorter.heapSwim(this.heap, 1, this.heapComparator);
         this.checkHeapCondition(1);
 
         // swim heap[1]
-        this.songSorter.heapSwim(this.heap,2,this.heapComparator);
+        this.songSorter.heapSwim(this.heap, 2, this.heapComparator);
         this.checkHeapCondition(2);
 
         // swim heap[2]
-        this.songSorter.heapSwim(this.heap,3,this.heapComparator);
+        this.songSorter.heapSwim(this.heap, 3, this.heapComparator);
         this.checkHeapCondition(3);
 
         // swim heap[3]
-        this.songSorter.heapSwim(this.heap,4,this.heapComparator);
+        this.songSorter.heapSwim(this.heap, 4, this.heapComparator);
         this.checkHeapCondition(4);
 
         // swim heap[4]
-        this.songSorter.heapSwim(this.heap,5,this.heapComparator);
+        this.songSorter.heapSwim(this.heap, 5, this.heapComparator);
         this.checkHeapCondition(5);
 
         // swim heap[5]
-        this.songSorter.heapSwim(this.heap,6,this.heapComparator);
+        this.songSorter.heapSwim(this.heap, 6, this.heapComparator);
         this.checkHeapCondition(6);
     }
 
@@ -160,31 +160,31 @@ class SongSorterTest {
 
     private void checkHeapCondition(int heapSize) {
         if (heapSize > 1) {
-            assertTrue(this.heapComparator.compare(this.heap.get(0),this.heap.get(1)) <= 0,
+            assertTrue(this.heapComparator.compare(this.heap.get(0), this.heap.get(1)) <= 0,
                     String.format("heap[0]='%s' should preceed heap[1]='%s' in zero-based heap of size=%d ",
                             this.heap.get(0).getTitle(), this.heap.get(1).getTitle(), heapSize));
         }
         if (heapSize > 2) {
-            assertTrue(this.heapComparator.compare(this.heap.get(0),this.heap.get(2)) <= 0,
+            assertTrue(this.heapComparator.compare(this.heap.get(0), this.heap.get(2)) <= 0,
                     String.format("heap[0]='%s' should preceed heap[2]='%s' in zero-based heap of size=%d ",
                             this.heap.get(0).getTitle(), this.heap.get(2).getTitle(), heapSize));
         }
         if (heapSize > 3) {
-            assertTrue(this.heapComparator.compare(this.heap.get(1),this.heap.get(3)) <= 0,
+            assertTrue(this.heapComparator.compare(this.heap.get(1), this.heap.get(3)) <= 0,
                     String.format("heap[1]='%s' should preceed heap[3]='%s' in zero-based heap of size=%d ",
                             this.heap.get(1).getTitle(), this.heap.get(3).getTitle(), heapSize));
         }
         if (heapSize > 4) {
-            assertTrue(this.heapComparator.compare(this.heap.get(1),this.heap.get(4)) <= 0,
+            assertTrue(this.heapComparator.compare(this.heap.get(1), this.heap.get(4)) <= 0,
                     String.format("heap[1]='%s' should preceed heap[4]='%s' in zero-based heap of size=%d ",
                             this.heap.get(1).getTitle(), this.heap.get(4).getTitle(), heapSize));
         }
         if (heapSize > 5) {
-            assertTrue(this.heapComparator.compare(this.heap.get(2),this.heap.get(5)) <= 0,
+            assertTrue(this.heapComparator.compare(this.heap.get(2), this.heap.get(5)) <= 0,
                     String.format("heap[2]='%s' should preceed heap[5]='%s' in zero-based heap of size=%d ",
                             this.heap.get(2).getTitle(), this.heap.get(5).getTitle(), heapSize));
         }
-        assertEquals(new HashSet(this.fewSongs.subList(0,6)), new HashSet(this.heap),
+        assertEquals(new HashSet(this.fewSongs.subList(0, 6)), new HashSet(this.heap),
                 "The overall content of the heap should not change, only the order of its items");
     }
 
