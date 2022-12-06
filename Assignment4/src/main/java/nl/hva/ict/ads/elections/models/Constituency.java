@@ -7,6 +7,9 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.parseInt;
+import static java.util.stream.Collectors.groupingBy;
+
 /**
  * A Constituency (kieskring) is a regional district (of multiple cities and villages).
  * Every Constituency has a unique Id
@@ -40,8 +43,8 @@ public class Constituency {
 
         // TODO initialise this.rankedCandidatesByParty with an appropriate Map implementation
         //  and this.pollingStations with an appropriate Set implementation organised by zipCode and Id
-
-
+        this.rankedCandidatesByParty = new TreeMap<>(Comparator.comparing(Party::getName));
+        this.pollingStations = new TreeSet<>(Comparator.comparing(PollingStation::getZipCode).thenComparing(PollingStation::getId));
     }
 
     /**
@@ -54,12 +57,15 @@ public class Constituency {
      * @return whether the registration has succeeded
      */
     public boolean register(int rank, Candidate candidate) {
-        // TODO  register the candidate in this constituency for his/her party at the given rank (ballot position)
-        //  hint: try to use computeIfAbsent to efficiently create and insert an empty ballot map into rankedCandidatesByParty only when required
+        // getting the ranks for the party or inserting a new map when not present.
+        NavigableMap<Integer,Candidate> computed = this.rankedCandidatesByParty.computeIfAbsent(candidate.getParty(), party -> new TreeMap<>());
 
+        // returning false when the rank is already taken or when the candidate already has a rank
+        if (computed.containsKey(rank) || computed.containsValue(candidate)) return false;
 
-
-        return false;    // replace by a proper outcome
+        // putting the candidate at the given rank
+        computed.put(rank, candidate);
+        return true;
     }
 
     /**
@@ -70,9 +76,7 @@ public class Constituency {
         // TODO: return all parties that have been registered at this constituency
         //  hint: there is no need to build a new collection; just return what you have got...
 
-
-
-        return null;    // replace by a proper outcome
+        return this.rankedCandidatesByParty.keySet();    // replace by a proper outcome
     }
 
     /**
@@ -84,8 +88,7 @@ public class Constituency {
     public Candidate getCandidate(Party party, int rank) {
         // TODO: return the candidate at the given rank in the given party
 
-
-        return null;    // replace by a proper outcome
+        return this.rankedCandidatesByParty.get(party).get(rank);    // replace by a proper outcome
     }
 
     /**
@@ -98,8 +101,7 @@ public class Constituency {
         //  hint: if the implementation classes of rankedCandidatesByParty are well chosen, this only takes one line of code
         //  hint: the resulting list may be immutable at your choice of implementation.
 
-
-        return null; // replace by a proper outcome
+        return new ArrayList<>(this.rankedCandidatesByParty.get(party).values()); // replace by a proper outcome
     }
 
     /**
@@ -111,8 +113,7 @@ public class Constituency {
         // TODO collect all candidates of all parties of this Constituency into a Set.
         //  hint: flatMap may help...
 
-
-        return null;    // replace by a proper outcome
+        return this.rankedCandidatesByParty.values().stream().flatMap(party -> party.values().stream()).collect(Collectors.toSet());
     }
 
     /**
@@ -126,10 +127,37 @@ public class Constituency {
     public NavigableSet<PollingStation> getPollingStationsByZipCodeRange(String firstZipCode, String lastZipCode) {
         // TODO: return all polling stations that have been registered at this constituency
         //  hint: there is no need to build a new collection; just return what you have got...
+//        int firstNumbers = Integer.parseInt(firstZipCode.substring(0, 4));
+//        String firstLetters = firstZipCode.substring(4, 6);
+//        int endNumbers = Integer.parseInt(lastZipCode.substring(0,4));
+//        String endLetters = lastZipCode.substring(4,6);
 
-
-        return null; // replace by a proper outcome
+        // return all polling stations with zip codes between the firstZipCode and lastZipCode, adhering pattern 'nnnnXX'
+        return this.pollingStations
+                .subSet(new PollingStation("0", firstZipCode, ""), true, new PollingStation("0", lastZipCode, ""), true);
     }
+
+    /**
+     * retrieve all polling stations that have been registered at this constituency
+     * @return
+     */
+    public NavigableSet<PollingStation> getPollingStations() {
+
+
+//        this.pollingStations.stream()
+//                .filter()
+
+
+    // pollingStation.getZipCode() >= firstZipCode && pollingStation.getZipCode() <= lastZipCode
+
+//        return this.pollingStations.stream()
+//                .filter(pollingStation ->
+//                (Integer.parseInt(pollingStation.getZipCode().split("^[a-zA-Z].*")[0]) > start)
+//                ); // replace by a proper outcome
+//
+        return this.pollingStations;
+    }
+
 
     /**
      * Provides a map of total number of votes per party in this constituency
@@ -137,10 +165,11 @@ public class Constituency {
      * @return
      */
     public Map<Party,Integer> getVotesByParty() {
-        // TODO prepare a map of total number of votes per party
-
-
-        return null; // replace by a proper outcome
+        // get all votes by party and merge them into a map.
+        return this.pollingStations.stream()
+                .map(PollingStation::getVotesByParty)
+                .flatMap(map -> map.entrySet().stream())
+                .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
     }
 
     /**
@@ -189,10 +218,6 @@ public class Constituency {
 
     protected Map<Party, NavigableMap<Integer, Candidate>> getRankedCandidatesByParty() {
         return this.rankedCandidatesByParty;
-    }
-
-    public NavigableSet<PollingStation> getPollingStations() {
-        return this.pollingStations;
     }
 
     protected static final Logger LOG = Logger.getLogger(Constituency.class.getName());

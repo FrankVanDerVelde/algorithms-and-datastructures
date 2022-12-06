@@ -16,6 +16,14 @@ import java.util.stream.Collectors;
  */
 public class PollingStation {
 
+    private static final Logger LOG = Logger.getLogger(PollingStation.class.getName());
+    public static final String POLLING_STATION_IDENTIFIER = "ReportingUnitIdentifier";
+    public static final String ID = "Id";
+    public static final String SELECTION = "Selection";
+    public static final String POLLING_STATION_VOTES = "ReportingUnitVotes";
+    public static final String VALID_VOTES = "ValidVotes";
+    public static final String NO_ZIPCODE = "";
+
     private final String id;
     private final String zipCode;
     private final String name;
@@ -29,11 +37,7 @@ public class PollingStation {
         this.id = id;
         this.zipCode = zipCode;
         this.name = name;
-
-        // TODO initialise this.votesByCandidate with an appropriate Map implementation
-
-
-
+        this.votesByCandidate = new HashMap<>();
     }
 
     /**
@@ -42,11 +46,7 @@ public class PollingStation {
      * @param numberOfVotes
      */
     public void addVotes(Candidate candidate, int numberOfVotes) {
-        // TODO add the number of votes for the candidate
-        //   hint: the best quality solution used one line of code...
-
-
-
+        votesByCandidate.put(candidate, votesByCandidate.getOrDefault(candidate, 0) + numberOfVotes);
     }
 
     public int getVotes(Candidate candidate) {
@@ -58,10 +58,10 @@ public class PollingStation {
      * @return the total number of votes in this polling station per party.
      */
     public Map<Party, Integer> getVotesByParty() {
-        // TODO accumulate the votes per candidate into a map of total vote counts by party
-
-
-        return null; // replace by a proper outcome
+        // take the entry set of the votesByCandidate map and group the entries by party
+        // then sum the number of votes per party
+        return votesByCandidate.entrySet().stream()
+                .collect(Collectors.groupingBy(e -> e.getKey().getParty(), Collectors.summingInt(Map.Entry::getValue)));
     }
 
     /**
@@ -71,7 +71,7 @@ public class PollingStation {
      */
     public void combineVotesWith(PollingStation target) {
         // merge the votes of this polling station into the target
-        this.getVotesByCandidate().entrySet().forEach(e -> target.addVotes(e.getKey(),e.getValue()));
+        this.getVotesByCandidate().forEach(target::addVotes);
         System.out.printf("\nHave combined votes of %s into %s ", this, target);
         this.getVotesByCandidate().clear();
     }
@@ -88,8 +88,7 @@ public class PollingStation {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PollingStation)) return false;
-        PollingStation other = (PollingStation) o;
+        if (!(o instanceof PollingStation other)) return false;
         return this.id.equals(other.id) && this.zipCode.equals(other.zipCode);
     }
 
@@ -114,13 +113,6 @@ public class PollingStation {
         return this.votesByCandidate;
     }
 
-    private static final Logger LOG = Logger.getLogger(PollingStation.class.getName());
-    public static final String POLLING_STATION_IDENTIFIER = "ReportingUnitIdentifier";
-    public static final String ID = "Id";
-    public static final String SELECTION = "Selection";
-    public static final String POLLING_STATION_VOTES = "ReportingUnitVotes";
-    public static final String VALID_VOTES = "ValidVotes";
-    public static final String NO_ZIPCODE = "";
     /**
      * Auxiliary method for parsing the data from the EML files
      * This method can be used as-is and does not require your investigation or extension.

@@ -5,6 +5,7 @@ import nl.hva.ict.ads.utils.xml.XMLParser;
 import javax.xml.stream.XMLStreamException;
 import java.util.Objects;
 import java.util.Random;
+import java.util.StringJoiner;
 
 /**
  * An electable Candidate of a Party.
@@ -12,6 +13,15 @@ import java.util.Random;
  * (Different candidates of different parties may have duplicate names)
  */
 public class Candidate {
+
+    public static final String CANDIDATE = "Candidate";
+    public static final String CANDIDATE_IDENTIFIER = "CandidateIdentifier";
+    public static final String RANK = "Id";
+    private static final String PERSON_NAME = "PersonName";
+    private static final String NAME_LINE = "NameLine";
+    private static final String FIRST_NAME = "FirstName";
+    private static final String LAST_NAME_PREFIX = "NamePrefix";
+    private static final String LAST_NAME = "LastName";
 
     private final String firstName;
     private final String lastNamePrefix;
@@ -39,14 +49,9 @@ public class Candidate {
      */
     public static String fullName(String firstName, String lastNamePrefix, String lastName) {
         // every candidate shall have a last name
-        String fullName = lastName;
 
-        // TODO prepend optional lastNamePrefix and optional firstName
-        //  to compose a unique and nicely formatted full name
-
-
-
-        return fullName;
+        if (lastNamePrefix != null) return String.join(" ", firstName, lastNamePrefix, lastName);
+        else return String.join(" ", firstName, lastName);
     }
 
     public String getFullName() {
@@ -64,22 +69,17 @@ public class Candidate {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Candidate)) return false;
-        Candidate other = (Candidate) o;
+        if (!(o instanceof Candidate other)) return false;
 
         // TODO provide the equality criterion to identify unique candidate instances
         //  hint: every candidate shall have a unique full name within his/her party.
 
-
-        return false; // replace by a proper outcome
+        return (this.getFullName().equals(other.getFullName()) && this.getParty().equals(other.getParty())); // replace by a proper outcome
     }
 
     @Override
     public int hashCode() {
-        // TODO provide a hashCode that is consistent with above equality criterion
-
-
-        return 0; // replace by a proper outcome
+        return Objects.hash(getFullName(), getParty());
     }
 
     public String getFirstName() {
@@ -98,14 +98,6 @@ public class Candidate {
         this.party = party;
     }
 
-    public static final String CANDIDATE = "Candidate";
-    public static final String CANDIDATE_IDENTIFIER = "CandidateIdentifier";
-    public static final String RANK = "Id";
-    private static final String PERSON_NAME = "PersonName";
-    private static final String NAME_LINE = "NameLine";
-    private static final String FIRST_NAME = "FirstName";
-    private static final String LAST_NAME_PREFIX = "NamePrefix";
-    private static final String LAST_NAME = "LastName";
     /**
      * Auxiliary method for parsing the data from the EML files
      * This method can be used as-is and does not require your investigation or extension.

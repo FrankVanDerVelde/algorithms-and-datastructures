@@ -29,9 +29,8 @@ public class Party {
     public Party(int id, String name) {
         this.id = id;
         this.name = name;
-
+        this.candidates = new HashSet<>();
         // TODO initialise this.candidates with an appropriate Set implementation
-
 
     }
 
@@ -46,17 +45,12 @@ public class Party {
      *              or otherwise the newCandidate itself
      */
     public Candidate addOrGetCandidate(Candidate newCandidate) {
-
         // associate the new Candidate with this party
         newCandidate.setParty(this);
 
-        // TODO try to add the newCandidate to the set of candidates,
-        //  and if that fails then return the existing duplicate instance that is in the set already.
-
-
-
-
-        return null; // replace by a proper outcome
+        candidates.add(newCandidate);
+        return candidates.stream().filter(c -> c.equals(newCandidate))
+                .findFirst().orElse(newCandidate);
     }
 
     @Override
@@ -70,24 +64,20 @@ public class Party {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Party)) return false;
-        Party other = (Party) o;
+        if (!(o instanceof Party other)) return false;
 
-        // TODO provide the equality criterion to identify unique party instances
-
-
-
-        return false; // replace by a proper outcome
+        return getId() == other.getId();
     }
 
     @Override
     public int hashCode() {
         // TODO provide a hashCode that is consistent with above equality criterion
 
-
-
-        return 0; // replace by a proper outcome
+//      return Integer.hashCode(getId()); // replace by a proper outcome
+        return id;
     }
+
+
 
     public int getId() {
         return id;

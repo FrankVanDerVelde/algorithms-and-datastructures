@@ -1,0 +1,9 @@
+a. entrySet(), keyset() or values()                                                                 USED ENTRYSET IN POLLING STATION                                                      USED IN POLLING STATION
+b. .subSet() or submap()
+c. .map() or .mapToInt() or .mapToDouble() or .mapToObj()
+d. .flatMap()
+4/6
+e. .filter() or limit() or .sorted()
+f. .max() or .min() or .count() or .sum() or .average() or .reduce() or findFirst()
+g. .get() or .orElse()                                                                              USED IN PARTY
+h. .collect() or .toList() with Collectors.toMap() or Collectors.groupingBy()                       USED IN POLLING STATION
