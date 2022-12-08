@@ -26,12 +26,11 @@ import static java.util.stream.Collectors.groupingBy;
  * Votes can be collected by Candidate and by Party across all polling stations.
  */
 public class Constituency {
-
     private final int id;
     private final String name;
 
     // All candidates that have been registered at this constituency organised by party and rank
-    private Map<Party,NavigableMap<Integer,Candidate>> rankedCandidatesByParty;
+    private Map<Party, NavigableMap<Integer, Candidate>> rankedCandidatesByParty;
 
     // The polling stations in this constituency organised by zipCode and id
     // such that Navigable Subsets of polling stations within a range of zipcodes can be retrieved efficiently.
@@ -53,12 +52,14 @@ public class Constituency {
      * If the rank is already taken by another Candidate, this registration shall fail and return false.
      * If the given candidate has been registered already at another rank, this registration shall also fail and return false
      * Used by XML import
+     *
      * @param candidate
      * @return whether the registration has succeeded
      */
     public boolean register(int rank, Candidate candidate) {
         // getting the ranks for the party or inserting a new map when not present.
-        NavigableMap<Integer,Candidate> computed = this.rankedCandidatesByParty.computeIfAbsent(candidate.getParty(), party -> new TreeMap<>());
+        NavigableMap<Integer, Candidate> computed = this.rankedCandidatesByParty
+                .computeIfAbsent(candidate.getParty(), party -> new TreeMap<>());
 
         // returning false when the rank is already taken or when the candidate already has a rank
         if (computed.containsKey(rank) || computed.containsValue(candidate)) return false;
@@ -70,6 +71,7 @@ public class Constituency {
 
     /**
      * retrieves the collection of parties that have registered one or more candidates at this constituency
+     *
      * @return
      */
     public Collection<Party> getParties() {
@@ -81,6 +83,7 @@ public class Constituency {
 
     /**
      * retrieves a candidate from the ballot list of given party and at given rank
+     *
      * @param party
      * @param rank
      * @return
@@ -93,6 +96,7 @@ public class Constituency {
 
     /**
      * retrieve a list of all registered candidates for a given party in order of their rank
+     *
      * @param party
      * @return
      */
@@ -107,31 +111,28 @@ public class Constituency {
     /**
      * finds all candidates who are electable in this Constituency
      * (via the list of candidates of a party that has been registered).
+     *
      * @return the set of all candidates in this Constituency.
      */
     public Set<Candidate> getAllCandidates() {
         // TODO collect all candidates of all parties of this Constituency into a Set.
         //  hint: flatMap may help...
 
-        return this.rankedCandidatesByParty.values().stream().flatMap(party -> party.values().stream()).collect(Collectors.toSet());
+        return this.rankedCandidatesByParty.values().stream()
+                .flatMap(party -> party.values().stream())
+                .collect(Collectors.toSet());
     }
 
     /**
      * Retrieve the sub set of polling stations that are located within the area of the specified zip codes
      * i.e. firstZipCode <= pollingStation.zipCode <= lastZipCode
      * All valid zip codes adhere to the pattern 'nnnnXX' with 1000 <= nnnn <= 9999 and 'AA' <= XX <= 'ZZ'
+     *
      * @param firstZipCode
      * @param lastZipCode
-     * @return      the sub set of polling stations within the specified zipCode range
+     * @return the sub set of polling stations within the specified zipCode range
      */
     public NavigableSet<PollingStation> getPollingStationsByZipCodeRange(String firstZipCode, String lastZipCode) {
-        // TODO: return all polling stations that have been registered at this constituency
-        //  hint: there is no need to build a new collection; just return what you have got...
-//        int firstNumbers = Integer.parseInt(firstZipCode.substring(0, 4));
-//        String firstLetters = firstZipCode.substring(4, 6);
-//        int endNumbers = Integer.parseInt(lastZipCode.substring(0,4));
-//        String endLetters = lastZipCode.substring(4,6);
-
         // return all polling stations with zip codes between the firstZipCode and lastZipCode, adhering pattern 'nnnnXX'
         return this.pollingStations
                 .subSet(new PollingStation("0", firstZipCode, ""), true, new PollingStation("0", lastZipCode, ""), true);
@@ -139,22 +140,10 @@ public class Constituency {
 
     /**
      * retrieve all polling stations that have been registered at this constituency
+     *
      * @return
      */
     public NavigableSet<PollingStation> getPollingStations() {
-
-
-//        this.pollingStations.stream()
-//                .filter()
-
-
-    // pollingStation.getZipCode() >= firstZipCode && pollingStation.getZipCode() <= lastZipCode
-
-//        return this.pollingStations.stream()
-//                .filter(pollingStation ->
-//                (Integer.parseInt(pollingStation.getZipCode().split("^[a-zA-Z].*")[0]) > start)
-//                ); // replace by a proper outcome
-//
         return this.pollingStations;
     }
 
@@ -162,9 +151,10 @@ public class Constituency {
     /**
      * Provides a map of total number of votes per party in this constituency
      * accumulated across all polling stations and all candidates
+     *
      * @return
      */
-    public Map<Party,Integer> getVotesByParty() {
+    public Map<Party, Integer> getVotesByParty() {
         // get all votes by party and merge them into a map.
         return this.pollingStations.stream()
                 .map(PollingStation::getVotesByParty)
@@ -174,6 +164,7 @@ public class Constituency {
 
     /**
      * adds a polling station to this constituency
+     *
      * @param pollingStation
      */
     public boolean add(PollingStation pollingStation) {
@@ -183,7 +174,8 @@ public class Constituency {
 
             // and merge the votes of the duplicate into the existing original
             pollingStation.combineVotesWith(existing);
-        };
+        }
+        ;
         return true;
     }
 
@@ -226,11 +218,12 @@ public class Constituency {
     public static final String ID = "Id";
     protected static final String CONSTITUENCY_NAME = "ContestName";
     public static final String INVALID_NAME = "INVALID";
+
     /**
      * Auxiliary method for parsing the data from the EML files
      * This method can be used as-is and does not require your investigation or extension.
      */
-    public static Constituency importFromXML(XMLParser parser, Map<Integer,Party> parties) throws XMLStreamException {
+    public static Constituency importFromXML(XMLParser parser, Map<Integer, Party> parties) throws XMLStreamException {
         if (parser.findBeginTag(CONSTITUENCY)) {
 
             int id = 0;

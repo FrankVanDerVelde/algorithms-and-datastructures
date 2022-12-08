@@ -26,9 +26,9 @@ public class ElectionsMain {
         //  Make sure to NOT ADD THE LARGE DATASET TO YOUR GIT.
         //  That will exceed capacity limits of your repository and block further access.
 
-        final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021_HvA_UvA"));
+//        final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021_HvA_UvA"));
         // final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021_NH"));
-        // final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021"));
+         final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021"));
 
         final int randomPartyId = 1 + (int)Math.floor(Math.random() * election.getParties().size());
 
