@@ -3,7 +3,9 @@ package nl.hva.ict.ads.elections.models;
 import nl.hva.ict.ads.utils.xml.XMLParser;
 
 import javax.xml.stream.XMLStreamException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A party that participates in the elections
@@ -16,15 +18,20 @@ import java.util.*;
  */
 public class Party {
 
+    public static final String PARTY = "Affiliation";
+    public static final String PARTY_IDENTIFIER = "AffiliationIdentifier";
+    public static final String ID = "Id";
+    public static final String INVALID_NAME = "INVALID";
+    private static final String REGISTERED_NAME = "RegisteredName";
     private final int id;
     private final String name;
-
     /**
      * tracks the candidates of this party
      * Candidates have a unique (full) name within the party.
      * But there may be different Candidates with the same name across different Parties.
      */
     private Set<Candidate> candidates;
+
 
     public Party(int id, String name) {
         this.id = id;
@@ -33,14 +40,49 @@ public class Party {
     }
 
     /**
+     * Auxiliary method for parsing the data from the EML files
+     * This methode can be used as-is and does not require your investigation or extension.
+     */
+    public static Party importFromXML(XMLParser parser, Constituency constituency, Map<Integer, Party> parties) throws XMLStreamException {
+        if (parser.findBeginTag(PARTY)) {
+            int id = 0;
+            String name = INVALID_NAME;
+            if (parser.findBeginTag(PARTY_IDENTIFIER)) {
+                id = parser.getIntegerAttributeValue(null, ID, 0);
+                if (parser.findBeginTag(REGISTERED_NAME)) {
+                    name = parser.getElementText();
+                }
+                parser.findAndAcceptEndTag(REGISTERED_NAME);
+                parser.findAndAcceptEndTag(PARTY_IDENTIFIER);
+
+            }
+
+            // work around effective final constraint of global variables in lambda expression
+            final String partyName = name;
+            Party party = parties.computeIfAbsent(id, (i) -> new Party(i, partyName));
+
+            parser.findBeginTag(Candidate.CANDIDATE);
+            while (parser.getLocalName().equals(Candidate.CANDIDATE)) {
+                // parse the candidate entry from the Xml file
+                Candidate.importFromXml(parser, constituency, party);
+            }
+
+            parser.findAndAcceptEndTag(PARTY);
+            return party;
+        }
+        return new Party(-1, INVALID_NAME);
+    }
+
+    /**
      * Adds a newCandidate to the set of candidates in the party
      * If a candidate with the same name already had been registered in the party earlier,
      * then this duplicate instance shall be retrieved from the set and returned for further use
      * thereby avoiding the memory footprint of continued use of all duplicate instances of candidates
      * as they are imported from XML
+     *
      * @param newCandidate
-     * @return  the existing duplicate instance of newCandidate if available,
-     *              or otherwise the newCandidate itself
+     * @return the existing duplicate instance of newCandidate if available,
+     * or otherwise the newCandidate itself
      */
     public Candidate addOrGetCandidate(Candidate newCandidate) {
         // associate the new Candidate with this party
@@ -69,13 +111,9 @@ public class Party {
 
     @Override
     public int hashCode() {
-        // TODO provide a hashCode that is consistent with above equality criterion
-
-//      return Integer.hashCode(getId()); // replace by a proper outcome
+//      return Integer.hashCode(getId());
         return id;
     }
-
-
 
     public int getId() {
         return id;
@@ -87,44 +125,5 @@ public class Party {
 
     public Set<Candidate> getCandidates() {
         return candidates;
-    }
-
-    public static final String PARTY = "Affiliation";
-    public static final String PARTY_IDENTIFIER = "AffiliationIdentifier";
-    public static final String ID = "Id";
-    private static final String REGISTERED_NAME = "RegisteredName";
-    public static final String INVALID_NAME = "INVALID";
-    /**
-     * Auxiliary method for parsing the data from the EML files
-     * This methode can be used as-is and does not require your investigation or extension.
-     */
-    public static Party importFromXML(XMLParser parser, Constituency constituency, Map<Integer,Party> parties) throws XMLStreamException {
-        if (parser.findBeginTag(PARTY)) {
-            int id = 0;
-            String name = INVALID_NAME;
-            if (parser.findBeginTag(PARTY_IDENTIFIER)) {
-                id = parser.getIntegerAttributeValue(null, ID, 0);
-                if (parser.findBeginTag(REGISTERED_NAME)) {
-                    name = parser.getElementText();
-                }
-                parser.findAndAcceptEndTag(REGISTERED_NAME);
-                parser.findAndAcceptEndTag(PARTY_IDENTIFIER);
-
-            }
-
-            // work around effective final constraint of global variables in lambda expression
-            final String partyName = name;
-            Party party = parties.computeIfAbsent(id, (i) -> new Party(i, partyName));
-
-            parser.findBeginTag(Candidate.CANDIDATE);
-            while (parser.getLocalName().equals(Candidate.CANDIDATE)) {
-                // parse the candidate entry from the Xml file
-                Candidate.importFromXml(parser, constituency, party);
-            }
-
-            parser.findAndAcceptEndTag(PARTY);
-            return party;
-        }
-        return new Party(-1, INVALID_NAME);
     }
 }

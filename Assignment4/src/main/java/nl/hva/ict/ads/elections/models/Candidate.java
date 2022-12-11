@@ -4,8 +4,6 @@ import nl.hva.ict.ads.utils.xml.XMLParser;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.Objects;
-import java.util.Random;
-import java.util.StringJoiner;
 
 /**
  * An electable Candidate of a Party.
@@ -33,6 +31,7 @@ public class Candidate {
         this.lastNamePrefix = lastNamePrefix;
         this.lastName = lastName;
     }
+
     public Candidate(String firstName, String lastNamePrefix, String lastName, Party party) {
         this(firstName, lastNamePrefix, lastName);
         this.setParty(party);
@@ -42,6 +41,7 @@ public class Candidate {
      * Composes the full name of a candidate from its optional name components
      * Every candidate shall have at least a valid last name
      * Other name components could be null
+     *
      * @param firstName
      * @param lastNamePrefix
      * @param lastName
@@ -52,50 +52,6 @@ public class Candidate {
 
         if (lastNamePrefix != null) return String.join(" ", firstName, lastNamePrefix, lastName);
         else return String.join(" ", firstName, lastName);
-    }
-
-    public String getFullName() {
-        return fullName(this.firstName, this.lastNamePrefix, this.lastName);
-    }
-
-    @Override
-    public String toString() {
-        return "Candidate{" +
-                "partyId=" + party.getId() +
-                ",name='" + getFullName() + "'" +
-                "}";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Candidate other)) return false;
-
-        // TODO provide the equality criterion to identify unique candidate instances
-        //  hint: every candidate shall have a unique full name within his/her party.
-
-        return (this.getFullName().equals(other.getFullName()) && this.getParty().equals(other.getParty())); // replace by a proper outcome
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getFullName(), getParty());
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Party getParty() {
-        return party;
-    }
-
-    public void setParty(Party party) {
-        this.party = party;
     }
 
     /**
@@ -145,5 +101,46 @@ public class Candidate {
         if (!registrationResult) {
             System.out.printf("Registration of %s in %s at rank=%d has failed\n", candidate, constituency, rank);
         }
+    }
+
+    public String getFullName() {
+        return fullName(this.firstName, this.lastNamePrefix, this.lastName);
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "partyId=" + party.getId() +
+                ",name='" + getFullName() + "'" +
+                "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Candidate other)) return false;
+
+        return (this.getFullName().equals(other.getFullName()) && this.getParty().equals(other.getParty()));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFullName(), getParty());
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Party getParty() {
+        return party;
+    }
+
+    public void setParty(Party party) {
+        this.party = party;
     }
 }

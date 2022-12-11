@@ -1,14 +1,10 @@
 package nl.hva.ict.ads.elections;
 
-import nl.hva.ict.ads.elections.models.*;
-import nl.hva.ict.ads.utils.xml.XMLParser;
+import nl.hva.ict.ads.elections.models.Election;
 import nl.hva.ict.ads.utils.PathUtils;
 
 import javax.xml.stream.XMLStreamException;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.*;
 
 public class ElectionsMain {
 
@@ -26,11 +22,10 @@ public class ElectionsMain {
         //  Make sure to NOT ADD THE LARGE DATASET TO YOUR GIT.
         //  That will exceed capacity limits of your repository and block further access.
 
-//        final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021_HvA_UvA"));
-        // final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021_NH"));
-         final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021"));
+        final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021_HvA_UvA"));
+//         final Election election = Election.importFromDataFolder(PathUtils.getResourcePath("/EML_bestanden_TK2021"));
 
-        final int randomPartyId = 1 + (int)Math.floor(Math.random() * election.getParties().size());
+        final int randomPartyId = 1 + (int) Math.floor(Math.random() * election.getParties().size());
 
         System.out.println(election.prepareSummary());
         System.out.println(election.prepareSummary(VOLT_PARTY_ID));

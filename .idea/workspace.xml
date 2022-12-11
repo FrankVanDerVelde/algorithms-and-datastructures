@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Added started project.">
+      <change afterPath="$PROJECT_DIR$/Assignment4/src/test/java/nl/hva/ict/ads/elections/models/ExtraTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assignment4/src/test/java/nl/hva/ict/ads/elections/models/SummaryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/ElectionsMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/ElectionsMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Candidate.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Candidate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Constituency.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Constituency.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Election.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Election.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Party.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/Party.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/PollingStation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment4/src/main/java/nl/hva/ict/ads/elections/models/PollingStation.java" afterDir="false" />
     </list>
     <list id="72b7cbec-4633-4184-9a1e-16119e91f806" name="Changes by Frank" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,25 +65,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "C:/Users/gaagj/Downloads/Assignment-1-Trains_starter-v22.1 (1)/Assignment4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.20076628",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/gaagj/Downloads/Assignment-1-Trains_starter-v22.1 (1)/Assignment4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.20076628&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\gaagj\Downloads\Assignment-1-Trains_starter-v22.1 (1)\Assignment4\src\main\resources\EML_bestanden_TK2022" />
@@ -91,7 +95,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ElectionsMain">
+  <component name="RunManager" selected="JUnit.Test all">
     <configuration name="ElectionsMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.ElectionsMain" />
       <module name="elections" />
@@ -129,14 +133,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SpotifyChartsMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="SpotifyChartsMain" />
-      <module name="spotify-charts" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ElectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ExtraTest.testInclusiveZipCodeSearch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="elections" />
       <extension name="coverage">
         <pattern>
@@ -145,45 +142,72 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
-      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.ElectionTest" />
-      <option name="METHOD_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.ExtraTest" />
+      <option name="METHOD_NAME" value="testInclusiveZipCodeSearch" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ExtraTest.zipCodeValidator" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="elections" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="nl.hva.ict.ads.elections.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
+      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.ExtraTest" />
+      <option name="METHOD_NAME" value="zipCodeValidator" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SummaryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="elections" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="nl.hva.ict.ads.elections.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
+      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.SummaryTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SongRankingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="spotify-charts" />
+    <configuration name="SummaryTest.arePartiesSortedCorrectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="elections" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="spotifycharts.*" />
+          <option name="PATTERN" value="nl.hva.ict.ads.elections.models.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="spotifycharts" />
-      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongRankingTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SongTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="spotify-charts" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="spotifycharts.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="spotifycharts" />
-      <option name="MAIN_CLASS_NAME" value="spotifycharts.SongTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
+      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.SummaryTest" />
+      <option name="METHOD_NAME" value="arePartiesSortedCorrectly" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Test all" type="JUnit" factoryName="JUnit">
       <module name="elections" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="PACKAGE_NAME" value="" />
@@ -197,19 +221,19 @@
     <list>
       <item itemvalue="Application.SongSortingEfficiencyMeasuring (2)" />
       <item itemvalue="Application.ElectionsMain" />
-      <item itemvalue="Application.SpotifyChartsMain" />
       <item itemvalue="JUnit.Test all" />
-      <item itemvalue="JUnit.ElectionTest" />
-      <item itemvalue="JUnit.SongRankingTest" />
-      <item itemvalue="JUnit.SongTest" />
+      <item itemvalue="JUnit.SummaryTest" />
+      <item itemvalue="JUnit.SummaryTest.arePartiesSortedCorrectly" />
+      <item itemvalue="JUnit.ExtraTest.testInclusiveZipCodeSearch" />
+      <item itemvalue="JUnit.ExtraTest.zipCodeValidator" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ElectionsMain" />
-        <item itemvalue="JUnit.ElectionTest" />
-        <item itemvalue="Application.SpotifyChartsMain" />
-        <item itemvalue="JUnit.SongRankingTest" />
-        <item itemvalue="JUnit.SongTest" />
+        <item itemvalue="JUnit.SummaryTest" />
+        <item itemvalue="JUnit.SummaryTest.arePartiesSortedCorrectly" />
+        <item itemvalue="JUnit.ExtraTest.testInclusiveZipCodeSearch" />
+        <item itemvalue="JUnit.ExtraTest.zipCodeValidator" />
       </list>
     </recent_temporary>
   </component>
@@ -235,6 +259,10 @@
       <workItem from="1670321395653" duration="37000" />
       <workItem from="1670322707837" duration="97000" />
       <workItem from="1670508619904" duration="6289000" />
+      <workItem from="1670679776128" duration="1247000" />
+      <workItem from="1670763470607" duration="9743000" />
+      <workItem from="1670773258858" duration="8006000" />
+      <workItem from="1670783042139" duration="2999000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed song">
       <created>1667517972074</created>

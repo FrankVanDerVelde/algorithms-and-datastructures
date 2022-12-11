@@ -8,9 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Holds all election data per consituency
@@ -18,20 +16,83 @@ import java.util.stream.Stream;
  */
 public class Election {
 
-    private String name;
-
     // all (unique) parties in this election, organised by Id
     // will be build from the XML
     protected Map<Integer, Party> parties;
-
     // all (unique) constituencies in this election, identified by Id
     protected Set<Constituency> constituencies;
+    private String name;
 
     public Election(String name) {
         this.name = name;
 
         this.parties = new HashMap<>();
         this.constituencies = new HashSet<>();
+    }
+
+    /**
+     * Transforms and sorts decreasingly vote counts by party into votes percentages by party
+     * The party with the highest vote count shall be ranked upfront
+     * The votes percentage by party is calculated from  100.0 * partyVotes / totalVotes;
+     *
+     * @return the sorted list of (party,votesPercentage) pairs with the highest percentage upfront
+     */
+    public static List<Map.Entry<Party, Double>> sortedElectionResultsByPartyPercentage(int tops, Map<Party, Integer> votesCounts) {
+        int totalVotes = integersSum(votesCounts.values());
+        return votesCounts.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(e -> Map.entry(e.getKey(), 100.0 * e.getValue() / totalVotes))
+                .limit(tops)
+                .toList();
+    }
+
+    /**
+     * auxiliary method to calculate the total sum of a collection of integers
+     *
+     * @param integers
+     * @return
+     */
+    public static int integersSum(Collection<Integer> integers) {
+        return integers.stream().reduce(Integer::sum).orElse(0);
+    }
+
+    /**
+     * Reads all data of Parties, Candidates, Contingencies and PollingStations from available files in the given folder and its subfolders
+     * This method can cope with any structure of sub folders, but does assume the file names to comply with the conventions
+     * as found from downloading the files from https://data.overheid.nl/dataset/verkiezingsuitslag-tweede-kamer-2021
+     * So, you can merge folders after unpacking the zip distributions of the data, but do not change file names.
+     *
+     * @param folderName the root folder with the data files of the election results
+     * @return een Election met alle daarbij behorende gegevens.
+     * @throws XMLStreamException bij fouten in een van de XML bestanden.
+     * @throws IOException        als er iets mis gaat bij het lezen van een van de bestanden.
+     */
+    public static Election importFromDataFolder(String folderName) throws XMLStreamException, IOException {
+        System.out.println("Loading election data from " + folderName);
+        Election election = new Election(folderName);
+        int progress = 0;
+        Map<Integer, Constituency> kieskringen = new HashMap<>();
+        for (Path constituencyCandidatesFile : PathUtils.findFilesToScan(folderName, "Kandidatenlijsten_TK2021_")) {
+            XMLParser parser = new XMLParser(new FileInputStream(constituencyCandidatesFile.toString()));
+            Constituency constituency = Constituency.importFromXML(parser, election.parties);
+            //election.constituenciesM.put(constituency.getId(), constituency);
+            election.constituencies.add(constituency);
+            showProgress(++progress);
+        }
+        System.out.println();
+        progress = 0;
+        for (Path votesPerPollingStationFile : PathUtils.findFilesToScan(folderName, "Telling_TK2021_gemeente")) {
+            XMLParser parser = new XMLParser(new FileInputStream(votesPerPollingStationFile.toString()));
+            election.importVotesFromXml(parser);
+            showProgress(++progress);
+        }
+        System.out.println();
+        return election;
+    }
+
+    protected static void showProgress(final int progress) {
+        System.out.print('.');
+        if (progress % 50 == 0) System.out.println();
     }
 
     /**
@@ -64,7 +125,7 @@ public class Election {
      * @return alle unique candidates organised in an ordered set.
      */
     public List<Candidate> getAllCandidates() {
-        return parties.values().stream()
+        return getParties().stream()
                 .flatMap(party -> party.getCandidates().stream())
                 .sorted(Comparator.comparing(c -> c.getParty().getId()))
                 .toList();
@@ -106,7 +167,6 @@ public class Election {
      * @return the sub set of polling stations within the specified zipCode range
      */
     public Collection<PollingStation> getPollingStationsByZipCodeRange(String firstZipCode, String lastZipCode) {
-        // TODO retrieve all polling stations within the area of the given range of zip codes (inclusively)
         return this.constituencies.stream()
                 .flatMap(c -> c.getPollingStationsByZipCodeRange(firstZipCode, lastZipCode).stream())
                 .toList();
@@ -133,27 +193,9 @@ public class Election {
      * @return
      */
     public Map<Party, Integer> getVotesByPartyAcrossPollingStations(Collection<PollingStation> pollingStations) {
-        // TODO calculate the total number of votes per party across the given polling stations
         return pollingStations.stream()
                 .flatMap(c -> c.getVotesByParty().entrySet().stream())
                 .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingInt(Map.Entry::getValue)));
-    }
-
-    /**
-     * Transforms and sorts decreasingly vote counts by party into votes percentages by party
-     * The party with the highest vote count shall be ranked upfront
-     * The votes percentage by party is calculated from  100.0 * partyVotes / totalVotes;
-     *
-     * @return the sorted list of (party,votesPercentage) pairs with the highest percentage upfront
-     */
-    public static List<Map.Entry<Party, Double>> sortedElectionResultsByPartyPercentage(int tops, Map<Party, Integer> votesCounts) {
-        // TODO transform the voteCounts input into a sorted list of entries holding votes percentage by party
-        int totalVotes = integersSum(votesCounts.values());
-        return votesCounts.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .map(e -> Map.entry(e.getKey(), 100.0 * e.getValue() / totalVotes))
-                .limit(tops)
-                .toList();
     }
 
     /**
@@ -170,15 +212,12 @@ public class Election {
      * @return the most representative polling station.
      */
     public PollingStation findMostRepresentativePollingStation() {
-        // calculate the overall total votes count distribution by Party
-        //  and find the PollingStation with the lowest relative deviation between
-        //  its votes count distribution and the overall distribution.
-        //   hint: reuse euclidianVotesDistributionDeviation to calculate a difference metric between two vote counts
-        //   hint: use the .min reducer on a stream of polling stations with a suitable comparator
         Map<Party, Integer> totalVotes = getVotesByParty();
         return this.constituencies.stream()
                 .flatMap(c -> c.getPollingStations().stream())
-                .min(Comparator.comparingDouble(ps -> euclidianVotesDistributionDeviation(totalVotes, ps.getVotesByParty())))
+                .min(Comparator.comparingDouble(
+                        ps -> euclidianVotesDistributionDeviation(totalVotes, ps.getVotesByParty())
+                ))
                 .orElse(null);
     }
 
@@ -208,130 +247,57 @@ public class Election {
                 .sum();
     }
 
-    /**
-     * auxiliary method to calculate the total sum of a collection of integers
-     *
-     * @param integers
-     * @return
-     */
-    public static int integersSum(Collection<Integer> integers) {
-        return integers.stream().reduce(Integer::sum).orElse(0);
-    }
-
-
     public String prepareSummary(int partyId) {
-
         Party party = this.getParty(partyId);
         Set<Candidate> candidates = party.getCandidates();
 
-
         // get total number of registrations across constituencies for this party
-        Map<Constituency, Integer> registrationsByConstituency = constituencies.stream()
-                .collect(Collectors.toMap(c -> c, c->c.getCandidates(party).size()));
+        Map<Constituency, Integer> registrationsByConstituency = numberOfRegistrationsByConstituency(party);
         int totalRegistrations = registrationsByConstituency.values().stream()
                 .reduce(Integer::sum)
                 .orElse(0);
-        // map
 
-
-        StringBuilder summary = new StringBuilder()
+        return new StringBuilder()
                 .append("\nSummary of ").append(party).append(":\n")
                 .append("Total number of candidates = ").append(candidates.size()).append("\n")
                 .append(candidates)
                 .append("\nTotal number of registrations = ")
                 .append(totalRegistrations).append("\n")
-                .append(registrationsByConstituency);
+                .append("Number of registrations per constituency: ")
+                .append(registrationsByConstituency).toString();
+    }
 
-        // TODO report total number of candidates in the given party
-        // TODO report the list with all candidates in the given party
-        // TODO report total number of registrations for the given party
-        // TODO report the map of number of registrations by constituency for the given party
-
-
-        return summary.toString();
+    public List<Party> getSortedPartiesById() {
+        return getParties().stream().sorted(Comparator.comparing(Party::getId)).toList();
     }
 
     public String prepareSummary() {
-        List<Party> parties = getParties().stream().sorted(Comparator.comparing(Party::getId)).toList();
+        List<Party> sortedParties = getSortedPartiesById();
         int pollingStations = this.constituencies.stream().mapToInt(c -> c.getPollingStations().size()).sum();
 
         Collection<PollingStation> pollingStationsByZipCodeRange = getPollingStationsByZipCodeRange("1091AA", "1091ZZ");
         PollingStation mostRepresentativePollingStation = findMostRepresentativePollingStation();
         Map<Party, Integer> mostRepresentativeStationVotes = mostRepresentativePollingStation.getVotesByParty();
 
-        StringBuilder summary = new StringBuilder()
+        return new StringBuilder()
                 .append("\nElection summary of ").append(this.name).append(":\n")
-                .append(parties.size()).append(" Participating parties:\n")
-                .append(parties).append("\n")
+                .append(sortedParties.size()).append(" Participating parties:\n")
+                .append(sortedParties).append("\n")
                 .append("Total number of constituencies = ").append(this.constituencies.size()).append("\n")
                 .append("Total number of polling stations = ").append(pollingStations).append("\n")
                 .append("Total number of candidates in the election = ").append(getAllCandidates().size()).append("\n")
                 .append("Different candidates with duplicate names across different parties are:\n")
                 .append(getCandidatesWithDuplicateNames()).append("\n")
                 .append("Overall election results by party percentage:\n")
-                .append(sortedElectionResultsByPartyPercentage(parties.size(), getVotesByParty())).append("\n")
+                .append(sortedElectionResultsByPartyPercentage(sortedParties.size(), getVotesByParty())).append("\n")
                 .append("Polling stations in Amsterdam Wibautstraat area with zip codes 1091AA-1091ZZ:\n")
                 .append(pollingStationsByZipCodeRange).append("\n")
                 .append("Top 10 election results by party percentage in Amsterdam area with zip codes 1091AA-1091ZZ:\n")
                 .append(sortedElectionResultsByPartyPercentage(10, getVotesByPartyAcrossPollingStations(pollingStationsByZipCodeRange)))
                 .append("\nMost representative polling station is:\n")
                 .append(mostRepresentativePollingStation).append("\n")
-                .append(sortedElectionResultsByPartyPercentage(mostRepresentativeStationVotes.size(), mostRepresentativeStationVotes));
-
-        // TODO report the total number of parties in the election
-        // TODO report the list of all parties ordered by increasing party-Id
-        // TODO report the total number of constituencies in the election
-        // TODO report the total number of polling stations in the election
-        // TODO report the total number of (different) candidates in the election
-        // TODO report the list with all candidates which have a counter part with a duplicate name in a different party
-
-        // TODO report the sorted list of overall election results ordered by decreasing party percentage
-        // TODO report the polling stations within the Amsterdam Wibautstraat area with zipcodes between 1091AA and 1091ZZ
-        // TODO report the top 10 sorted election results within the Amsterdam Wibautstraat area
-        //   with zipcodes between 1091AA and 1091ZZ ordered by decreasing party percentage
-        // TODO report the most representative polling station across the election
-        // TODO report the sorted election results by decreasing party percentage of the most representative polling station
-
-        return summary.toString();
-    }
-
-    /**
-     * Reads all data of Parties, Candidates, Contingencies and PollingStations from available files in the given folder and its subfolders
-     * This method can cope with any structure of sub folders, but does assume the file names to comply with the conventions
-     * as found from downloading the files from https://data.overheid.nl/dataset/verkiezingsuitslag-tweede-kamer-2021
-     * So, you can merge folders after unpacking the zip distributions of the data, but do not change file names.
-     *
-     * @param folderName the root folder with the data files of the election results
-     * @return een Election met alle daarbij behorende gegevens.
-     * @throws XMLStreamException bij fouten in een van de XML bestanden.
-     * @throws IOException        als er iets mis gaat bij het lezen van een van de bestanden.
-     */
-    public static Election importFromDataFolder(String folderName) throws XMLStreamException, IOException {
-        System.out.println("Loading election data from " + folderName);
-        Election election = new Election(folderName);
-        int progress = 0;
-        Map<Integer, Constituency> kieskringen = new HashMap<>();
-        for (Path constituencyCandidatesFile : PathUtils.findFilesToScan(folderName, "Kandidatenlijsten_TK2021_")) {
-            XMLParser parser = new XMLParser(new FileInputStream(constituencyCandidatesFile.toString()));
-            Constituency constituency = Constituency.importFromXML(parser, election.parties);
-            //election.constituenciesM.put(constituency.getId(), constituency);
-            election.constituencies.add(constituency);
-            showProgress(++progress);
-        }
-        System.out.println();
-        progress = 0;
-        for (Path votesPerPollingStationFile : PathUtils.findFilesToScan(folderName, "Telling_TK2021_gemeente")) {
-            XMLParser parser = new XMLParser(new FileInputStream(votesPerPollingStationFile.toString()));
-            election.importVotesFromXml(parser);
-            showProgress(++progress);
-        }
-        System.out.println();
-        return election;
-    }
-
-    protected static void showProgress(final int progress) {
-        System.out.print('.');
-        if (progress % 50 == 0) System.out.println();
+                .append(sortedElectionResultsByPartyPercentage(mostRepresentativeStationVotes.size(), mostRepresentativeStationVotes))
+                .toString();
     }
 
     /**
