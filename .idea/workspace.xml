@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Added extra tests and cleaned up code.">
+    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Added maze starter project.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assignment5/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment5/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment5/src/main/java/maze_escape/AbstractGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment5/src/main/java/maze_escape/AbstractGraph.java" afterDir="false" />
     </list>
     <list id="72b7cbec-4633-4184-9a1e-16119e91f806" name="Changes by Frank" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +88,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.Test all">
+  <component name="RunManager" selected="JUnit.AbstractGraphTest.adjacencyListsShouldFormatPerOrder">
     <configuration name="ElectionsMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.ElectionsMain" />
       <module name="elections" />
@@ -126,33 +126,48 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExtraTest.testInclusiveZipCodeSearch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="elections" />
+    <configuration name="AbstractGraphTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="maze-escape" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="nl.hva.ict.ads.elections.models.*" />
+          <option name="PATTERN" value="maze_escape.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
-      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.ExtraTest" />
-      <option name="METHOD_NAME" value="testInclusiveZipCodeSearch" />
+      <option name="PACKAGE_NAME" value="maze_escape" />
+      <option name="MAIN_CLASS_NAME" value="maze_escape.AbstractGraphTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AbstractGraphTest.adjacencyListsShouldFormatPerOrder" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="maze-escape" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="maze_escape.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="maze_escape" />
+      <option name="MAIN_CLASS_NAME" value="maze_escape.AbstractGraphTest" />
+      <option name="METHOD_NAME" value="adjacencyListsShouldFormatPerOrder" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExtraTest.zipCodeValidator" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="elections" />
+    <configuration name="AbstractGraphTest.getAllVerticesShouldFindAllConnected" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="maze-escape" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="nl.hva.ict.ads.elections.models.*" />
+          <option name="PATTERN" value="maze_escape.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
-      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.ExtraTest" />
-      <option name="METHOD_NAME" value="zipCodeValidator" />
+      <option name="PACKAGE_NAME" value="maze_escape" />
+      <option name="MAIN_CLASS_NAME" value="maze_escape.AbstractGraphTest" />
+      <option name="METHOD_NAME" value="getAllVerticesShouldFindAllConnected" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -169,22 +184,6 @@
       <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
       <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.SummaryTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SummaryTest.arePartiesSortedCorrectly" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="elections" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="nl.hva.ict.ads.elections.models.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
-      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.SummaryTest" />
-      <option name="METHOD_NAME" value="arePartiesSortedCorrectly" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -215,18 +214,18 @@
       <item itemvalue="Application.SongSortingEfficiencyMeasuring (2)" />
       <item itemvalue="Application.ElectionsMain" />
       <item itemvalue="JUnit.Test all" />
+      <item itemvalue="JUnit.AbstractGraphTest" />
+      <item itemvalue="JUnit.AbstractGraphTest.adjacencyListsShouldFormatPerOrder" />
+      <item itemvalue="JUnit.AbstractGraphTest.getAllVerticesShouldFindAllConnected" />
       <item itemvalue="JUnit.SummaryTest" />
-      <item itemvalue="JUnit.SummaryTest.arePartiesSortedCorrectly" />
-      <item itemvalue="JUnit.ExtraTest.testInclusiveZipCodeSearch" />
-      <item itemvalue="JUnit.ExtraTest.zipCodeValidator" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.AbstractGraphTest.adjacencyListsShouldFormatPerOrder" />
+        <item itemvalue="JUnit.AbstractGraphTest.getAllVerticesShouldFindAllConnected" />
+        <item itemvalue="JUnit.AbstractGraphTest" />
         <item itemvalue="Application.ElectionsMain" />
         <item itemvalue="JUnit.SummaryTest" />
-        <item itemvalue="JUnit.SummaryTest.arePartiesSortedCorrectly" />
-        <item itemvalue="JUnit.ExtraTest.testInclusiveZipCodeSearch" />
-        <item itemvalue="JUnit.ExtraTest.zipCodeValidator" />
       </list>
     </recent_temporary>
   </component>
@@ -256,7 +255,7 @@
       <workItem from="1670763470607" duration="9743000" />
       <workItem from="1670773258858" duration="8006000" />
       <workItem from="1670783042139" duration="3371000" />
-      <workItem from="1673699178544" duration="195000" />
+      <workItem from="1673699178544" duration="8733000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed song">
       <created>1667517972074</created>
@@ -314,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670786327143</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added maze starter project.">
+      <created>1673699459695</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1673699459695</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +346,8 @@
     <MESSAGE value="Started on efficiency." />
     <MESSAGE value="Added sorting efficiency measurement test." />
     <MESSAGE value="Added extra tests and cleaned up code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added extra tests and cleaned up code." />
+    <MESSAGE value="Added maze starter project." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added maze starter project." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
