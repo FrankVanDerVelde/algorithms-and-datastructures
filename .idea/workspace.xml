@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Added maze starter project.">
+    <list default="true" id="752808b6-edbd-4799-9125-f4f75a9e7558" name="Changes" comment="Added getAllVertices and formatAdjacencyList methods.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assignment5/src/main/java/maze_escape/AbstractGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment5/src/main/java/maze_escape/AbstractGraph.java" afterDir="false" />
     </list>
-    <list id="72b7cbec-4633-4184-9a1e-16119e91f806" name="Changes by Frank" comment="" />
+    <list id="72b7cbec-4633-4184-9a1e-16119e91f806" name="Changes by Frank" comment="">
+      <change beforePath="$PROJECT_DIR$/Assignment5/src/main/java/maze_escape/AbstractGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment5/src/main/java/maze_escape/AbstractGraph.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,6 +37,25 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/Assignment5/src/main/java/maze_escape/AbstractGraph.java">
+      <ranges>
+        <range start1="2" end1="2" start2="2" end2="3" changelist="72b7cbec-4633-4184-9a1e-16119e91f806" />
+        <range start1="39" end1="40" start2="40" end2="41" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="117" end1="117" start2="118" end2="126" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="181" end1="185" start2="190" end2="191" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="186" end1="186" start2="192" end2="215" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="198" end1="199" start2="227" end2="227" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="203" end1="203" start2="231" end2="264" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="206" end1="206" start2="267" end2="268" changelist="72b7cbec-4633-4184-9a1e-16119e91f806" />
+        <range start1="241" end1="243" start2="303" end2="303" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="244" end1="245" start2="304" end2="304" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="246" end1="250" start2="305" end2="327" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="251" end1="277" start2="328" end2="334" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+        <range start1="279" end1="281" start2="336" end2="381" changelist="752808b6-edbd-4799-9125-f4f75a9e7558" />
+      </ranges>
+    </file>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -58,25 +79,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/Lukas/ADS/Assignment5",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.20076628",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Lukas/ADS/Assignment5&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.20076628&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\gaagj\Downloads\Assignment-1-Trains_starter-v22.1 (1)\Assignment4\src\main\resources\EML_bestanden_TK2022" />
@@ -88,13 +109,26 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.AbstractGraphTest.adjacencyListsShouldFormatPerOrder">
+  <component name="RunManager" selected="JUnit.Test all">
     <configuration name="ElectionsMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.ElectionsMain" />
       <module name="elections" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="nl.hva.ict.ads.elections.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrimMazeEscapeMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="maze_escape.PrimMazeEscapeMain" />
+      <module name="maze-escape" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="maze_escape.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -173,23 +207,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SummaryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="elections" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="nl.hva.ict.ads.elections.models.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="nl.hva.ict.ads.elections.models" />
-      <option name="MAIN_CLASS_NAME" value="nl.hva.ict.ads.elections.models.SummaryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Test all" type="JUnit" factoryName="JUnit">
-      <module name="elections" />
+      <module name="maze-escape" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="false" />
         <option name="IS_SUBST" value="false" />
@@ -212,20 +231,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.SongSortingEfficiencyMeasuring (2)" />
+      <item itemvalue="Application.PrimMazeEscapeMain" />
       <item itemvalue="Application.ElectionsMain" />
       <item itemvalue="JUnit.Test all" />
       <item itemvalue="JUnit.AbstractGraphTest" />
       <item itemvalue="JUnit.AbstractGraphTest.adjacencyListsShouldFormatPerOrder" />
       <item itemvalue="JUnit.AbstractGraphTest.getAllVerticesShouldFindAllConnected" />
-      <item itemvalue="JUnit.SummaryTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PrimMazeEscapeMain" />
+        <item itemvalue="JUnit.AbstractGraphTest" />
         <item itemvalue="JUnit.AbstractGraphTest.adjacencyListsShouldFormatPerOrder" />
         <item itemvalue="JUnit.AbstractGraphTest.getAllVerticesShouldFindAllConnected" />
-        <item itemvalue="JUnit.AbstractGraphTest" />
         <item itemvalue="Application.ElectionsMain" />
-        <item itemvalue="JUnit.SummaryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -255,7 +274,8 @@
       <workItem from="1670763470607" duration="9743000" />
       <workItem from="1670773258858" duration="8006000" />
       <workItem from="1670783042139" duration="3371000" />
-      <workItem from="1673699178544" duration="8733000" />
+      <workItem from="1673699178544" duration="8908000" />
+      <workItem from="1673786017228" duration="6206000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed song">
       <created>1667517972074</created>
@@ -320,7 +340,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673699459695</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added getAllVertices and formatAdjacencyList methods.">
+      <created>1673712288378</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1673712288379</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,7 +374,8 @@
     <MESSAGE value="Added sorting efficiency measurement test." />
     <MESSAGE value="Added extra tests and cleaned up code." />
     <MESSAGE value="Added maze starter project." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added maze starter project." />
+    <MESSAGE value="Added getAllVertices and formatAdjacencyList methods." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added getAllVertices and formatAdjacencyList methods." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
